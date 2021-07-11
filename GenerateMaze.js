@@ -1,6 +1,8 @@
 //depth first search backtracking
 function GenerateMaze() {
-  currentCell = cells[0];
+  let currentCell;
+  let stack = [];
+  currentCell = all_cells_in_maze[0];
   while (true) {
     currentCell.visited = true;
     let next = currentCell.checkNeighbors();
@@ -17,14 +19,14 @@ function GenerateMaze() {
   }
 }
 
-function getCellIndexByCoordinate(x, y) {
-  if (x < 0 || y < 0 || x > columns - 1 || y > rows - 1) {
+function getCellIndexByCoordinate(x, y) {                                                //There is an array that holds all the cells in the genrated maze, use the coordinate of the cell to get the index of the cell in that array
+  if (x < 0 || y < 0 || x > columns_number - 1 || y > rows_number - 1) {
     return -1;
   }
-  return x + y * columns;
+  return x + y * columns_number;
 }
 
-function connectNeighbours(currentCell, neighbourCell) {
+function connectNeighbours(currentCell, neighbourCell) {                                 //Remove the walls to connect the cells(set the target side of the wall to value: False)
   let dist_x = currentCell.x - neighbourCell.x;
   if (dist_x === 1) {
     currentCell.walls[3] = false;
