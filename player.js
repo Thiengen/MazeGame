@@ -9,19 +9,20 @@ function spawnPlayer(spawning_point){
 }
 
 function keyPressed() {
-  if (keyCode == 87 && !cell_player_is_in.walls[0]) {
+    if ((keyCode == 87 || label === "Up" )&& !cell_player_is_in.walls[0]) {
+    print(label)
     move(directions.TOP);
     return;
   }
-  else if (keyCode == 68 && !cell_player_is_in.walls[1]) {
+  else if ((keyCode == 68 || label === "Right" )&& !cell_player_is_in.walls[1]) {
     move(directions.RIGHT);
     return;
   }
-  else if (keyCode == 83 && !cell_player_is_in.walls[2]) {
+  else if ((keyCode == 83 || label === "Down" )&& !cell_player_is_in.walls[2]) {
     move(directions.BOTTOM);
     return;
   }
-  else if (keyCode == 65 && !cell_player_is_in.walls[3]) {
+  else if ((keyCode == 65 ||label === "Left" )&& !cell_player_is_in.walls[3]) {
     move(directions.LEFT);
     return;
   }
