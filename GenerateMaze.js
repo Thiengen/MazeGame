@@ -1,8 +1,14 @@
 //depth first search backtracking
-function GenerateMaze() {
+function GenerateMaze(starting_Point) {
   let currentCell;
   let stack = [];
-  currentCell = all_cells_in_maze[0];
+  if(starting_Point){
+    let currentCellIndex =  getCellIndexByCoordinate(starting_Point.x, starting_Point.y);
+    currentCell = all_cells_in_maze[currentCellIndex];
+  }
+  else{
+    currentCell = all_cells_in_maze[0];
+  }
   while (true) {
     currentCell.visited = true;
     let next = currentCell.checkNeighbors();
