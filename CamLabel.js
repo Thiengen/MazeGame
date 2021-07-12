@@ -1,4 +1,4 @@
-let label = " Waiting ..." ;
+let label = " Waiting " ;
 let video ;
 let classifier ;
 
