@@ -1,3 +1,3 @@
 # MazeGame
 
-if u don't undertand my code, u can ask your computer science teacher. cb
+This is a maze game currently developing by twelveans!
