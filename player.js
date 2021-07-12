@@ -10,20 +10,27 @@ function spawnPlayer(spawning_point){
 
 function keyPressed() {
     if ((keyCode == 87 || label === "Up" )&& !cell_player_is_in.walls[0]) {
-    print(label)
     move(directions.TOP);
+    print(label)
     return;
   }
   else if ((keyCode == 68 || label === "Right" )&& !cell_player_is_in.walls[1]) {
     move(directions.RIGHT);
+    print(label)
     return;
   }
   else if ((keyCode == 83 || label === "Down" )&& !cell_player_is_in.walls[2]) {
     move(directions.BOTTOM);
+    print(label)
     return;
   }
   else if ((keyCode == 65 ||label === "Left" )&& !cell_player_is_in.walls[3]) {
     move(directions.LEFT);
+    print(label)
+    return;
+  }
+  else if (label == "Nothing "){
+    print(label)
     return;
   }
 }
