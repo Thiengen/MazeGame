@@ -1,3 +1,5 @@
+let columns_number, rows_number;
+
 //depth first search backtracking
 function GenerateMaze(starting_Point) {
   let currentCell;
@@ -23,6 +25,12 @@ function GenerateMaze(starting_Point) {
       break;
     }
   }
+}
+
+function setMazeSize(width, height) {
+  columns_number = width;
+  rows_number = height;
+  addAllCellsToMaze(all_cells_in_maze, rows_number, columns_number);     //Add row * columns of cells to the array
 }
 
 function getCellIndexByCoordinate(x, y) {                                                //There is an array that holds all the cells in the genrated maze, use the coordinate of the cell to get the index of the cell in that array
