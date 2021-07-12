@@ -1,8 +1,5 @@
 let columns_number, rows_number;
 let cell_length = 30;
-let label = " Waiting ..." ;
-let video ;
-let classifier ;
 let all_cells_in_maze = [];                                               //The Array that holds every cells in the generated maze
 
 
