@@ -5,11 +5,6 @@ function preload(){
   classifier = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/z1D-tZeyu/" + 'model.json')  ;
 }
 
-
-function preload(){
-  classifier = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/z1D-tZeyu/" + 'model.json')  ;
-}
-
 function setup() {
 
   createCanvas(600, 600);
