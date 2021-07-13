@@ -9,30 +9,52 @@ function spawnPlayer(spawning_point){
 }
 
 function keyPressed() {
-    if ((keyCode == 87 || label === "Up" )&& !cell_player_is_in.walls[0]) {
+    if (keyCode == 87  && !cell_player_is_in.walls[0]) {
     move(directions.TOP);
-    print(label)
+
     return;
   }
-  else if ((keyCode == 68 || label === "Right" )&& !cell_player_is_in.walls[1]) {
+  else if (keyCode == 68 && !cell_player_is_in.walls[1]) {
     move(directions.RIGHT);
-    print(label)
+
     return;
   }
-  else if ((keyCode == 83 || label === "Down" )&& !cell_player_is_in.walls[2]) {
+  else if (keyCode == 83 && !cell_player_is_in.walls[2]) {
     move(directions.BOTTOM);
-    print(label)
+
     return;
   }
-  else if ((keyCode == 65 ||label === "Left" )&& !cell_player_is_in.walls[3]) {
+  else if (keyCode == 65 && !cell_player_is_in.walls[3]) {
     move(directions.LEFT);
-    print(label)
+
     return;
   }
-  else if (label == "Nothing "){
-    print(label)
-    return;
-  }
+}
+
+function PlayerMovementWithLabel() {
+  if (label == "Up"  && !cell_player_is_in.walls[0]) {
+  move(directions.TOP);
+
+  return;
+}
+else if (label == "Right" && !cell_player_is_in.walls[1]) {
+  move(directions.RIGHT);
+
+  return;
+}
+else if (label == "Down" && !cell_player_is_in.walls[2]) {
+  move(directions.BOTTOM);
+
+  return;
+}
+else if (label == "Left" && !cell_player_is_in.walls[3]) {
+  move(directions.LEFT);
+
+  return;
+}
+else if (label === "Nothing"){
+ label == "Please move !"
+}
 }
 
 function renderPlayer(side_color, fill_color) {

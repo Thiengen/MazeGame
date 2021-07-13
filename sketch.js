@@ -24,7 +24,7 @@ function draw() {
   renderPlayer(color(47, 194, 86), color(10, 36, 17));
   printLabel();
   frameRate(10)
-  keyPressed();
+  PlayerMovementWithLabel();
 }
 
 function setMazeSize(width, height) {
