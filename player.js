@@ -54,19 +54,37 @@ class Player{
 }
 
 function keyPressed() {
-  if ((keyCode == 87 || label === "Up" )&& !player.cell_in.walls[0]) {
+  if (keyCode == 87 && !player.cell_in.walls[0]) {
     player.Move(directions.TOP);
     return;
   }
-  else if ((keyCode == 68 || label === "Right" )&& !player.cell_in.walls[1]) {
+  else if (keyCode == 68 && !player.cell_in.walls[1]) {
     player.Move(directions.RIGHT);
     return;
   }
-  else if ((keyCode == 83 || label === "Down" )&& !player.cell_in.walls[2]) {
+  else if (keyCode == 83 && !player.cell_in.walls[2]) {
     player.Move(directions.BOTTOM);
     return;
   }
-  else if ((keyCode == 65 ||label === "Left" )&& !player.cell_in.walls[3]) {
+  else if (keyCode == 65  && !player.cell_in.walls[3]) {
+    player.Move(directions.LEFT);
+  }
+}
+
+function PlayerMovementWithLabel() {
+  if (label == "Up" && !player.cell_in.walls[0]) {
+    player.Move(directions.TOP);
+    return;
+  }
+  else if (label == "Right"&& !player.cell_in.walls[1]) {
+    player.Move(directions.RIGHT);
+    return;
+  }
+  else if (label == "Down"&& !player.cell_in.walls[2]) {
+    player.Move(directions.BOTTOM);
+    return;
+  }
+  else if (label == "Left"&& !player.cell_in.walls[3]) {
     player.Move(directions.LEFT);
   }
 }
