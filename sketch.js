@@ -6,6 +6,7 @@ function preload(){
 }
 
 function setup() {
+  loadGame = false;
   createCanvas(600, 600);
   maze = new Maze(30, width, height);
   maze.Generate();
@@ -17,8 +18,9 @@ function setup() {
 
 function draw() {
   background(51);
-  maze.Render(color(255,255,255), color(60, 60, 60));
-  player.Render(color(47, 194, 86), color(10, 36, 17));
-  printLabel();
-  //PlayerMovementWithLabel();
+  textSize(75)
+  text(StartPic , 120 , 150)
+  textSize(60)
+  text(InstructionText , 50 , 250)
+  LoadGame();
 }
