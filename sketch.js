@@ -2,7 +2,7 @@ let maze;
 let player;
 
 function preload(){
-  classifier = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/z1D-tZeyu/" + 'model.json')  ;
+  classifier = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/T0F1IgmTv/" + 'model.json')  ;
 }
 
 function setup() {
@@ -18,6 +18,7 @@ function setup() {
 
 function draw() {
   background(51);
+  frameRate(10);
   textSize(75)
   text(StartPic , 120 , 150)
   textSize(60)
