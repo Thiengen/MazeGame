@@ -1,9 +1,17 @@
+class Wall{
+  constructor(vertex1, vertex2, is_active){
+    this.vertex1 = createVector(vertex1.x,vertex1.y);
+    this.vertex2 = createVector(vertex2.x,vertex2.y);
+    this.is_active = is_active;
+  }
+}
+
 class Cell{
   x;
   y;
   maze;
   visited = false;
-  walls = [true, true, true, true];
+  walls = [];
   absolute_x;
   absolute_y;
 
@@ -13,20 +21,27 @@ class Cell{
     this.maze = maze;
     this.absolute_x = this.x * this.maze.cell_length;
     this.absolute_y = this.y * this.maze.cell_length;
+    this.GenerateWalls();
+  }
+
+  GenerateWalls() {
+    const cell_midPoint = createVector(this.absolute_x + this.maze.cell_length / 2, this.absolute_y + this.maze.cell_length / 2);
+    const cell_cornerVector = createVector(-this.maze.cell_length / 2, -this.maze.cell_length / 2);
+    for (let i = 0; i < 4; i++) {
+      const vertex_one = p5.Vector.add(cell_midPoint, cell_cornerVector);
+      cell_cornerVector.rotate(HALF_PI);
+      const vertex_two = p5.Vector.add(cell_midPoint, cell_cornerVector);
+      this.walls.push(new Wall(vertex_one, vertex_two, true));
+    }
   }
 
   Show(wall_color, cell_color) {                                                     //Show the cell and their active walls with color
     stroke(wall_color);
-    const cell_cornerVector = createVector(-this.maze.cell_length/2, -this.maze.cell_length / 2);  
-    const cell_midPoint = createVector(this.absolute_x + this.maze.cell_length / 2, this.absolute_y + this.maze.cell_length / 2);    
     for (let i = 0; i < this.walls.length; i++) {
-      if(this.walls[i]){
-        const vertex_one = p5.Vector.add(cell_midPoint, cell_cornerVector);
-        cell_cornerVector.rotate(HALF_PI);
-        const vertex_two = p5.Vector.add(cell_midPoint, cell_cornerVector);
-        line(vertex_one.x,vertex_one.y,vertex_two.x,vertex_two.y);
-      }else{
-        cell_cornerVector.rotate(HALF_PI);
+      if(this.walls[i].is_active){
+        const vertex1 = this.walls[i].vertex1;
+        const vertex2 = this.walls[i].vertex2;
+        line(vertex1.x,vertex1.y,vertex2.x,vertex2.y);
       }
     }
     noStroke();

@@ -46,21 +46,21 @@ class Maze{
   ConnectNeighbours(currentCell, neighbourCell) {                                 //Remove the walls to connect the cells(set the target side of the wall to value: False)
     let dist_x = currentCell.x - neighbourCell.x;
     if (dist_x === 1) {
-      currentCell.walls[3] = false;
-      neighbourCell.walls[1] = false;
+      currentCell.walls[3].is_active = false;
+      neighbourCell.walls[1].is_active = false;
     } 
     else if (dist_x === -1) {
-      currentCell.walls[1] = false;
-      neighbourCell.walls[3] = false;
+      currentCell.walls[1].is_active = false;
+      neighbourCell.walls[3].is_active = false;
     }
     let dist_y = currentCell.y - neighbourCell.y;
     if (dist_y === 1) {
-      currentCell.walls[0] = false;
-      neighbourCell.walls[2] = false;
+      currentCell.walls[0].is_active = false;
+      neighbourCell.walls[2].is_active = false;
     } 
     else if (dist_y === -1) {
-      currentCell.walls[2] = false;
-      neighbourCell.walls[0] = false;
+      currentCell.walls[2].is_active = false;
+      neighbourCell.walls[0].is_active = false;
     }
   }
   
