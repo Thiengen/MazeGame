@@ -17,22 +17,22 @@ class Cell{
 
   Show(wall_color, cell_color) {                                                     //Show the cell and their active walls with color
     stroke(wall_color);
-    if (this.walls[0]) {                                                                            //If this side of the wall is true then draw a line to show the wall, else don't draw the line
-      line(this.absolute_x, this.absolute_y, this.absolute_x + this.maze.cell_length, this.absolute_y);
-    }
-    if (this.walls[1]) {
-      line(this.absolute_x + this.maze.cell_length, this.absolute_y, this.absolute_x + this.maze.cell_length, this.absolute_y + this.maze.cell_length);
-    }
-    if (this.walls[2]) {
-      line(this.absolute_x + this.maze.cell_length, this.absolute_y + this.maze.cell_length, this.absolute_x, this.absolute_y + this.maze.cell_length);
-    }
-    if (this.walls[3]) {
-      line(this.absolute_x, this.absolute_y + this.maze.cell_length, this.absolute_x, this.absolute_y);
+    const cell_cornerVector = createVector(-this.maze.cell_length/2, -this.maze.cell_length / 2);  
+    const cell_midPoint = createVector(this.absolute_x + this.maze.cell_length / 2, this.absolute_y + this.maze.cell_length / 2);    
+    for (let i = 0; i < this.walls.length; i++) {
+      if(this.walls[i]){
+        const vertex_one = p5.Vector.add(cell_midPoint, cell_cornerVector);
+        cell_cornerVector.rotate(HALF_PI);
+        const vertex_two = p5.Vector.add(cell_midPoint, cell_cornerVector);
+        line(vertex_one.x,vertex_one.y,vertex_two.x,vertex_two.y);
+      }else{
+        cell_cornerVector.rotate(HALF_PI);
+      }
     }
     noStroke();
     fill(cell_color);
     rect(this.absolute_x, this.absolute_y, this.maze.cell_length, this.maze.cell_length);                                       //Draw a rectangle(in this case is a square) inside the cell to show color
-  };
+  }
 
   CheckNeighbors() {                                //Used in the maze genration algorithm
     if(!this.maze){
