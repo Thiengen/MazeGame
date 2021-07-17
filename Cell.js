@@ -49,24 +49,14 @@ class Cell{
       return undefined;
     }
     let neighbors = [];
-    const top = this.maze.GetCellByCoordinate(this.vector.x, this.vector.y - 1);
-    const right = this.maze.GetCellByCoordinate(this.vector.x + 1, this.vector.y);
-    const bottom = this.maze.GetCellByCoordinate(this.vector.x, this.vector.y + 1);
-    const left = this.maze.GetCellByCoordinate(this.vector.x - 1, this.vector.y);
-
-    if (top && !top.visited) {
-      neighbors.push(top);
+    const initial_vector = createVector(0, -1);
+    for (let i = 0; i < this.walls.length; i++) {
+      const neighbour = this.maze.GetCellByCoordinate(initial_vector.x + this.vector.x, initial_vector.y + this.vector.y);
+      if(neighbour && !neighbour.visited){
+        neighbors.push(neighbour);
+      }
+      initial_vector.rotate(HALF_PI);
     }
-    if (right && !right.visited) {
-      neighbors.push(right);
-    }
-    if (bottom && !bottom.visited) {
-      neighbors.push(bottom);
-    }
-    if (left && !left.visited) {
-      neighbors.push(left);
-    }
-
     if (neighbors.length > 0) {
       let r = floor(random(0, neighbors.length));
       return neighbors[r];
