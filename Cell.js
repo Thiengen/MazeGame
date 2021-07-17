@@ -7,25 +7,18 @@ class Wall{
 }
 
 class Cell{
-  x;
-  y;
-  maze;
   visited = false;
   walls = [];
-  absolute_x;
-  absolute_y;
 
   constructor(x, y, maze){
-    this.x = x;
-    this.y = y;
+    this.vector = createVector(x,y);
     this.maze = maze;
-    this.absolute_x = this.x * this.maze.cell_length;
-    this.absolute_y = this.y * this.maze.cell_length;
+    this.absolute_v = p5.Vector.mult(this.vector, maze.cell_length);
     this.GenerateWalls();
   }
 
   GenerateWalls() {
-    const cell_midPoint = createVector(this.absolute_x + this.maze.cell_length / 2, this.absolute_y + this.maze.cell_length / 2);
+    const cell_midPoint = p5.Vector.add(this.absolute_v, p5.Vector.mult(createVector(1, 1), this.maze.cell_length / 2));
     const cell_cornerVector = createVector(-this.maze.cell_length / 2, -this.maze.cell_length / 2);
     for (let i = 0; i < 4; i++) {
       const vertex_one = p5.Vector.add(cell_midPoint, cell_cornerVector);
@@ -35,7 +28,8 @@ class Cell{
     }
   }
 
-  Show(wall_color, cell_color) {                                                     //Show the cell and their active walls with color
+  Show(wall_color, cell_color) {
+    strokeWeight(2);                                                     //Show the cell and their active walls with color
     stroke(wall_color);
     for (let i = 0; i < this.walls.length; i++) {
       if(this.walls[i].is_active){
@@ -46,7 +40,7 @@ class Cell{
     }
     noStroke();
     fill(cell_color);
-    rect(this.absolute_x, this.absolute_y, this.maze.cell_length, this.maze.cell_length);                                       //Draw a rectangle(in this case is a square) inside the cell to show color
+    rect(this.absolute_v.x, this.absolute_v.y, this.maze.cell_length, this.maze.cell_length);                                       //Draw a rectangle(in this case is a square) inside the cell to show color
   }
 
   CheckNeighbors() {                                //Used in the maze genration algorithm
@@ -55,10 +49,10 @@ class Cell{
       return undefined;
     }
     let neighbors = [];
-    const top = this.maze.GetCellByCoordinate(this.x, this.y - 1);
-    const right = this.maze.GetCellByCoordinate(this.x + 1, this.y);
-    const bottom = this.maze.GetCellByCoordinate(this.x, this.y + 1);
-    const left = this.maze.GetCellByCoordinate(this.x - 1, this.y);
+    const top = this.maze.GetCellByCoordinate(this.vector.x, this.vector.y - 1);
+    const right = this.maze.GetCellByCoordinate(this.vector.x + 1, this.vector.y);
+    const bottom = this.maze.GetCellByCoordinate(this.vector.x, this.vector.y + 1);
+    const left = this.maze.GetCellByCoordinate(this.vector.x - 1, this.vector.y);
 
     if (top && !top.visited) {
       neighbors.push(top);
