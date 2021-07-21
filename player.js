@@ -23,16 +23,20 @@ class Player{
 
   Render(side_color, fill_color){
     fill(fill_color);
-    rect(this.cell_in.absolute_x, this.cell_in.absolute_y, this.maze.cell_length, this.maze.cell_length);
-    stroke(side_color);   // LOKI SKIN
-    line(this.cell_in.absolute_x, this.cell_in.absolute_y, this.cell_in.absolute_x + this.maze.cell_length, this.cell_in.absolute_y);
-    line(this.cell_in.absolute_x + this.maze.cell_length, this.cell_in.absolute_y, this.cell_in.absolute_x + this.maze.cell_length, this.cell_in.absolute_y + this.maze.cell_length);
-    line(this.cell_in.absolute_x + this.maze.cell_length, this.cell_in.absolute_y + this.maze.cell_length, this.cell_in.absolute_x, this.cell_in.absolute_y + this.maze.cell_length);
-    line(this.cell_in.absolute_x, this.cell_in.absolute_y + this.maze.cell_length, this.cell_in.absolute_x, this.cell_in.absolute_y);
+    const size = this.maze.cell_length - 5;
+    const offset = (this.maze.cell_length - size) / 2;
+    rect(this.cell_in.absolute_v.x + offset, this.cell_in.absolute_v.y + offset, size, size);
+    if(!side_color || side_color === null){return;}
+    stroke(side_color);   // NOT LOKI SKIN ANYMORE
+    strokeWeight(0.5);
+    for (let i = 0; i < this.cell_in.walls.length; i++) {
+      const wall = this.cell_in.walls[i];
+      line(wall.vertex1.x, wall.vertex1.y, wall.vertex2.x, wall.vertex2.y);
+    }
   }
 
   Move(direction){
-    const translation = this.MoveToCell(direction, this.cell_in);
+    const translation = this.MoveToCell(direction, this.cell_in.vector);
     this.cell_in =  this.maze.GetCellByCoordinate(translation.x, translation.y);
   }
   
@@ -53,38 +57,40 @@ class Player{
   }
 }
 
-function keyPressed() {
-  if (keyCode == 87 && !player.cell_in.walls[0]) {
+function keyTyped(){
+  if(!(gameSystem.gameState instanceof PlayState)){return;}
+  const player = gameSystem.player;
+  if(key === 'w' && !player.cell_in.walls[0].is_active){
     player.Move(directions.TOP);
     return;
   }
-  else if (keyCode == 68 && !player.cell_in.walls[1]) {
+  else if (key === 'a' && !player.cell_in.walls[3].is_active) {
+    player.Move(directions.LEFT);
+    return;
+  }
+  else if (key === 'd' && !player.cell_in.walls[1].is_active) {
     player.Move(directions.RIGHT);
     return;
   }
-  else if (keyCode == 83 && !player.cell_in.walls[2]) {
+  else if (key === 's' && !player.cell_in.walls[2].is_active) {
     player.Move(directions.BOTTOM);
-    return;
-  }
-  else if (keyCode == 65  && !player.cell_in.walls[3]) {
-    player.Move(directions.LEFT);
   }
 }
 
 function PlayerMovementWithLabel() {
-  if (label == "Up" && !player.cell_in.walls[0]) {
+  if (label == "Up" && !player.cell_in.walls[0].is_active) {
     player.Move(directions.TOP);
     return;
   }
-  else if (label == "Right"&& !player.cell_in.walls[1]) {
+  else if (label == "Right"&& !player.cell_in.walls[1].is_active) {
     player.Move(directions.RIGHT);
     return;
   }
-  else if (label == "Down"&& !player.cell_in.walls[2]) {
+  else if (label == "Down"&& !player.cell_in.walls[2].is_active) {
     player.Move(directions.BOTTOM);
     return;
   }
-  else if (label == "Left"&& !player.cell_in.walls[3]) {
+  else if (label == "Left"&& !player.cell_in.walls[3].is_active) {
     player.Move(directions.LEFT);
   }
 }
