@@ -1,6 +1,7 @@
 let label = " Waiting ..." ;
 let video ;
 let classifier ;
+
 function OpenAndHideCamera() {
   video = createCapture(VIDEO);
   video.hide();

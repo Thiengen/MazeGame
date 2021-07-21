@@ -26,7 +26,7 @@ class Player{
     const size = this.maze.cell_length - 5;
     const offset = (this.maze.cell_length - size) / 2;
     rect(this.cell_in.absolute_v.x + offset, this.cell_in.absolute_v.y + offset, size, size);
-    stroke(side_color);   // LOKI SKIN
+    stroke(side_color);   // NOT LOKI SKIN ANYMORE
     strokeWeight(0.5);
     for (let i = 0; i < this.cell_in.walls.length; i++) {
       const wall = this.cell_in.walls[i];
@@ -56,21 +56,23 @@ class Player{
   }
 }
 
-function keyPressed() {
-  if (keyCode == 87 && !player.cell_in.walls[0].is_active) {
+function keyTyped(){
+  if(!(gameSystem.gameState instanceof PlayState)){return;}
+  const player = gameSystem.player;
+  if(key === 'w' && !player.cell_in.walls[0]){
     player.Move(directions.TOP);
     return;
   }
-  else if (keyCode == 68 && !player.cell_in.walls[1].is_active) {
+  else if (key === 'a' && !player.cell_in.walls[3]) {
+    player.Move(directions.LEFT);
+    return;
+  }
+  else if (key === 'd' && !player.cell_in.walls[1]) {
     player.Move(directions.RIGHT);
     return;
   }
-  else if (keyCode == 83 && !player.cell_in.walls[2].is_active) {
+  else if (key === 's' && !player.cell_in.walls[2]) {
     player.Move(directions.BOTTOM);
-    return;
-  }
-  else if (keyCode == 65  && !player.cell_in.walls[3].is_active) {
-    player.Move(directions.LEFT);
   }
 }
 

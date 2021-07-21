@@ -5,7 +5,11 @@ class Maze{
   all_cells = [];
 
   constructor(cell_length, width, height){
-    this.cell_length = cell_length;
+    this.SetSize(cell_length, width, height);
+  }
+
+  SetSize(cell_length, width, height){
+    this.cell_length = floor(cell_length);
     this.rows_number = floor(width / cell_length);
     this.columns_number = floor(height / cell_length);
   }
@@ -17,6 +21,7 @@ class Maze{
   }
   
   Generate(start_point){
+    this.all_cells = [];
     let stack = [];
     if(this.all_cells.length < this.rows_number * this.columns_number){
       this.AddAllCellsToMaze();
@@ -78,7 +83,7 @@ class Maze{
     if (x < 0 || y < 0 || x > maze.columns_number - 1 || y > maze.rows_number - 1) {
       return -1;
     }
-    return x + y * maze.columns_number;
+    return floor(x) + floor(y) * maze.columns_number;
   }
 }
 
