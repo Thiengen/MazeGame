@@ -8,6 +8,7 @@ class PlayState extends GameState {
 		this.gameSystem.player.Spawn();
 		// Destination set next to player this.destination = this.gameSystem.maze.GetCellByCoordinate(this.gameSystem.maze.rows_number / 2 + 1, this.gameSystem.maze.columns_number / 2);
 		this.destination = this.gameSystem.maze.all_cells[this.gameSystem.maze.all_cells.length - 1];
+		classifyDirection(this);
 	}
 
 	execute() {
@@ -17,9 +18,9 @@ class PlayState extends GameState {
 	}
 
 	checkHasWon() {
-		this.destination.Show(color("black"), color(233, 196, 106));
+		this.destination.Show(color(233, 196, 106), color("black"));
 		if (this.gameSystem.player.cell_in === this.destination) {
-			this.gameSystem.switchState(new WonState(this.gameSystem));
+			gameSystem.gameState = new WonState(this.gameSystem);
 		}
 	}
 }

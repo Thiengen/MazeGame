@@ -44,13 +44,16 @@ class Cell {
 		noStroke();
 		fill(cell_color);
 		rect(this.absolute_v.x, this.absolute_v.y, this.maze.cell_length, this.maze.cell_length);
-		fill(255);
-		textSize(10);
-		text(
-			"x: " + this.vector.x + "\n y:" + this.vector.y,
-			this.absolute_v.x + this.maze.cell_length / 2,
-			this.absolute_v.y + this.maze.cell_length / 2
-		);
+
+		if (debug) {
+			fill(255);
+			textSize(10);
+			text(
+				"x: " + this.vector.x + "\n y:" + this.vector.y,
+				this.absolute_v.x + this.maze.cell_length / 2,
+				this.absolute_v.y + this.maze.cell_length / 2
+			);
+		}
 	}
 
 	CheckNeighbors(visited_cells) {

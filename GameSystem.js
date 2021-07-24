@@ -1,19 +1,15 @@
-class GameSystem{
-    maze;
-    player;
-    gameState;
+class GameSystem {
+	maze;
+	player;
+	gameState;
 
-    constructor(maze, player){
-        this.maze = maze;
-        this.player = player;
-        this.gameState = new InitialState(this);
-    }
+	constructor(maze, player) {
+		this.maze = maze;
+		this.player = player;
+		this.gameState = new InitialState(this);
+	}
 
-    update(){
-        this.gameState.execute();
-    }
-
-    switchState(state){
-        this.gameState = state;
-    }
+	update() {
+		this.gameState.execute();
+	}
 }
