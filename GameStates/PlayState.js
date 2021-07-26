@@ -4,6 +4,7 @@ class PlayState extends GameState {
 	}
 
 	start() {
+
 		this.gameSystem.maze.Generate();
 		this.gameSystem.player.Spawn();
 		// Destination set next to player this.destination = this.gameSystem.maze.GetCellByCoordinate(this.gameSystem.maze.rows_number / 2 + 1, this.gameSystem.maze.columns_number / 2);
@@ -12,8 +13,8 @@ class PlayState extends GameState {
 	}
 
 	execute() {
-		this.gameSystem.maze.Render(color(244, 162, 97), color(38, 70, 83));
-		this.gameSystem.player.Render(color(42, 157, 143));
+		this.gameSystem.maze.Render(color("#FF5C4D"), color("#FFC55C"));
+		this.gameSystem.player.Render(color("#FF0000"));
 		this.checkHasWon();
 	}
 

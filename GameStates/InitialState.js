@@ -1,6 +1,6 @@
 class InitialState extends GameState {
-	startPic = "Ready ?";
-	instructionText = "Put your hands up";
+	GameName = "Welcome to Orange Maze !"
+	instructionText = "Ready ? \n Put your hands up";
 
 	constructor(gameSystem) {
 		super(gameSystem);
@@ -11,10 +11,11 @@ class InitialState extends GameState {
 	}
 
 	execute() {
+		background("#D18700")
 		showText(
-			this.startPic,
+			this.GameName,
 			width / 2,
-			height / 2 - 100,
+			height / 2 - 200,
 			60,
 			CENTER,
 			"Georgia",
@@ -22,6 +23,7 @@ class InitialState extends GameState {
 			color(233, 196, 106),
 			1
 		);
+
 		showText(
 			this.instructionText,
 			width / 2,
