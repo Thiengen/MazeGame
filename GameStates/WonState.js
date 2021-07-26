@@ -24,9 +24,9 @@ class WonState extends GameState {
 			15,
 			CENTER,
 			"Georgia",
-			color(233, 196, 106),
-			color(233, 196, 106),
-			1
+			color("orange"),
+			color("darkorange"),
+			2
 		);
 	}
 }

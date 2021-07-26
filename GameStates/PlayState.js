@@ -19,7 +19,7 @@ class PlayState extends GameState {
 	}
 
 	checkHasWon() {
-		this.destination.Show(color(233, 196, 106), color("black"));
+		this.destination.Show(color("grey"), color("grey"));
 		if (this.gameSystem.player.cell_in === this.destination) {
 			gameSystem.gameState = new WonState(this.gameSystem);
 		}

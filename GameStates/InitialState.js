@@ -11,7 +11,6 @@ class InitialState extends GameState {
 	}
 
 	execute() {
-		background("#D18700")
 		showText(
 			this.GameName,
 			width / 2,
@@ -19,21 +18,21 @@ class InitialState extends GameState {
 			60,
 			CENTER,
 			"Georgia",
-			color(233, 196, 106),
-			color(233, 196, 106),
-			1
+			color(200),
+			color("black"),
+			3
 		);
 
 		showText(
 			this.instructionText,
 			width / 2,
 			height / 2 + 20,
-			30,
+			45,
 			CENTER,
 			"Georgia",
-			color(233, 196, 106),
-			color(233, 196, 106),
-			1
+			color(200),
+			color("black"),
+			2
 		);
 	}
 }
