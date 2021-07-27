@@ -10,8 +10,9 @@ class GameSystem {
 	}
 
 	update() {
-		background("#D18700")
+		
 		this.gameState.execute();
+
 		
 	}
 }
