@@ -21,11 +21,11 @@ class PlayState extends GameState {
 
 	execute() {
 		background("#D18700")
-		tutorial();
 		this.printPicture()
+		tutorial();
 
-		this.gameSystem.maze.Render(color("#FF5C4D"), color("#FFC55C"));
-		this.gameSystem.player.Render(color("#FF0000"));
+		this.gameSystem.maze.Render(color("red"), color("#FFB300"));
+		this.gameSystem.player.Render(color("#D92721"));
 		this.checkHasWon();
 		
 		
