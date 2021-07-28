@@ -1,8 +1,3 @@
-let imageUp 
-let imageDown
-let imageOpen
-let imageRight 
-let imageLeft
 let up = "Move Up", down = "Move Down", Right ="Move Right", Left = "Move Left", nextLevel= "Go next level "
 
 function tutorial(){
@@ -24,4 +19,3 @@ function tutorial(){
 
 
 }
-

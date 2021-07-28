@@ -1,4 +1,10 @@
 class PlayState extends GameState {
+	imgUp = loadImage('Up.jpg')
+	imgDown = loadImage('Down.jpg')
+	imgLeft = loadImage('Left.jpg')
+	imgRight = loadImage('Right.jpg')
+	imgOpen = loadImage('Open.jpg')
+
 	constructor(gameSystem) {
 		super(gameSystem);
 	}
@@ -16,14 +22,22 @@ class PlayState extends GameState {
 	execute() {
 		background("#D18700")
 		tutorial();
-		
-	
+		this.printPicture()
+
 		this.gameSystem.maze.Render(color("#FF5C4D"), color("#FFC55C"));
 		this.gameSystem.player.Render(color("#FF0000"));
 		this.checkHasWon();
 		
 		
 	}
+	printPicture() {
+		image(this.imgUp, 570, 0, 200, 185)
+		image(this.imgDown, 570, 225, 250, 175)
+		image(this.imgOpen, 570, 460, 250, 175)
+		image(this.imgLeft, 290, 460, 250, 175)
+		image(this.imgRight, 10, 460, 250, 175)
+	}
+
 	checkHasWon() {
 		this.destination.Show(color("grey"), color("grey"));
 		if (this.gameSystem.player.cell_in === this.destination ) {

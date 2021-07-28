@@ -2,6 +2,7 @@ class InitialState extends GameState {
 	GameName = "Welcome to Orange Maze !"
 	instructionText = "Ready ? \n Open your hand to start the game ";
 
+
 	constructor(gameSystem) {
 		super(gameSystem);
 	}
@@ -13,7 +14,6 @@ class InitialState extends GameState {
 
 	execute() {
 		background('#D18700')
-		
 		showText(
 			this.GameName,
 			width / 2,
