@@ -19,7 +19,13 @@ function classifyDirection(state) {
 		return;
 	}
 	flippedVideo = ml5.flipImage(video);
-	directionClassifier.classify(flippedVideo, gotDirectionResults);
+	directionClassifier.classify(flippedVideo, gotResults);
+	// directionClassifier.classify(flippedVideo, gotDirectionResults);
+}
+
+function gotResults(err, results) {
+	console.log(results[0]);
+	classifyDirection(gameSystem.gameState);
 }
 
 function gotDirectionResults(error, results) {
@@ -30,16 +36,15 @@ function gotDirectionResults(error, results) {
 	if (results[0].label === "Vertical") {
 		flippedVideo = ml5.flipImage(video);
 		verticalClassifier.classify(flippedVideo, gotVerticalResults);
-		return;
-	}
-	if (results[0].label === "Horizontal") {
+	} else if (results[0].label === "Horizontal") {
 		flippedVideo = ml5.flipImage(video);
 		horizontalClassifier.classify(flippedVideo, gotHorizontalResults);
-		return;
+	} else {
+		label = results[0].label;
+		suffix = floor(results[0].confidence * 100) + "%";
+		flippedVideo = ml5.flipImage(video);
+		classifyDirection(gameSystem.gameState);
 	}
-	label = results[0].label;
-	suffix = floor(results[0].confidence * 100) + "%";
-	classifyDirection(gameSystem.gameState);
 }
 
 function gotHorizontalResults(error, results) {
