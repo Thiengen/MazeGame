@@ -1,10 +1,10 @@
 class WonState extends GameState {
 	constructor(gameSystem) {
 		super(gameSystem);
+		this.start();
 	}
 
 	start() {
-
 		 const nextLevelButton = createButton("Next Level");
 		 nextLevelButton.mousePressed(() => {
 		//if ( label == "Next"){ 

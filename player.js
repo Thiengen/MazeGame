@@ -1,19 +1,12 @@
 class Player {
-	cell_in;
-	maze;
 	speed = 5;
 
-	constructor(maze) {
-		this.maze = maze;
-	}
-
-	Spawn(spawning_point = null, maze = null) {
+	Spawn(maze, spawning_point = null) {
 		this.target_cell = undefined;
-		this.maze = maze ? maze : this.maze;
+		this.maze = maze;
 		this.cell_in = spawning_point
-			? this.maze.GetCellByCoordinate(spawning_point.x, spawning_point.y)
-			: this.maze.GetCellByCoordinate(0, 0);
-		console.log(this.cell_in);
+			? maze.GetCellByCoordinate(spawning_point.x, spawning_point.y)
+			: maze.GetCellByCoordinate(0, 0);
 
 		if (!this.cell_in) {
 			console.error("Player is not spawn in a maze !\nThe game cannot start!");

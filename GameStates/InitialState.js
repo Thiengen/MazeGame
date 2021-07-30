@@ -56,7 +56,7 @@ function keyPressed() {
 	if (!(gameSystem.gameState instanceof InitialState)) {
 		return;
 	}
-	if (keyCode === ENTER) {
-		gameSystem.gameState = new PlayState(gameSystem);
+	if (keyCode === ENTER && gameSystem.ModelsReady()) {
+		gameSystem.changeState(PlayState);
 	}
 }

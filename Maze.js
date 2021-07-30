@@ -8,6 +8,10 @@ class Maze {
 		this.SetSize(cell_length, width, height);
 	}
 
+	clearCache() {
+		this.all_cells = undefined;
+	}
+
 	SetSize(cell_length, width, height) {
 		this.cell_length = floor(cell_length);
 		this.columns_number = floor(width / cell_length);
