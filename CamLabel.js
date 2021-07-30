@@ -1,4 +1,4 @@
-let label = "Loading model";
+label = "Loading model";
 let suffix = "";
 let video;
 let flippedVideo;

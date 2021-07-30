@@ -57,7 +57,7 @@ class Cell {
 	}
 
 	CheckNeighbors(visited_cells) {
-		//Used in the maze genration algorithm
+		//Used in the maze generation algorithm
 		if (!this.maze) {
 			console.warn("This cell doesn't belongs to any maze !!!");
 			return undefined;
