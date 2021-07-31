@@ -48,6 +48,7 @@ class PlayState extends GameState {
 		if (results[0].label === "Idle") {
 			label = results[0].label;
 			gameSystem.Classifiers[0].classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
+			
 			return;
 		}
 		const classifier = gameSystem.GetClassifierByName(results[0].label);
@@ -62,9 +63,10 @@ class PlayState extends GameState {
 
 	execute() {
 		background("#D18700");
-		this.printPicture();
-		tutorial();
-
+		if (label !== "Loading model"){ // Show tutorial when the model loaded
+			this.printPicture();
+			tutorial();
+		}
 		this.gameSystem.maze.Render(color("red"), color("#FFB300"));
 		this.gameSystem.player.Render(color("#D92721"));
 		this.checkHasWon();
@@ -76,7 +78,7 @@ class PlayState extends GameState {
 
 	printPicture() {
 		image(this.imgUp, 570, 0, 200, 185);
-		image(this.imgDown, 570, 225, 250, 175);
+		image(this.imgDown, 570, 225, 200, 185);
 		image(this.imgOpen, 570, 460, 250, 175);
 		image(this.imgLeft, 290, 460, 250, 175);
 		image(this.imgRight, 10, 460, 250, 175);

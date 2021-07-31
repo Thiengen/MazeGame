@@ -24,3 +24,4 @@ function draw() {
 	PlayerMovementWithLabel();
 	printLabel();
 }
+//testing
