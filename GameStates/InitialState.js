@@ -13,6 +13,8 @@ class InitialState extends GameState {
 	}
 
 	execute() {
+		playerwidth = width
+		playerheight = height
 		background('#D18700')
 		showText(
 			this.GameName,

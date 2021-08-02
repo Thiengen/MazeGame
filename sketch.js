@@ -1,6 +1,7 @@
 let gameSystem;
 let difficulty_modifier = 2;
 let debug = false;
+let playerwidth , playerheight
 let width , height //Need this as I created second canvas in Play Mode
 // const model1 = "https://teachablemachine.withgoogle.com/models/e76KsCVS5/";
 // const model2 = "https://teachablemachine.withgoogle.com/models/58FWJDZhc/";
@@ -25,5 +26,7 @@ function draw() {
 	checkUserInput();
 	gameSystem.update();
 	PlayerMovementWithLabel();
+	printLabel(playerwidth , playerheight)
+
 }
 //testing
