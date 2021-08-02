@@ -1,6 +1,7 @@
 let gameSystem;
 let difficulty_modifier = 2;
 let debug = false;
+let width , height //Need this as I created second canvas in Play Mode
 // const model1 = "https://teachablemachine.withgoogle.com/models/e76KsCVS5/";
 // const model2 = "https://teachablemachine.withgoogle.com/models/58FWJDZhc/";
 const classifiers = [];
@@ -12,7 +13,10 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(900, 700);
+	width = 900
+	height = 700
+	createCanvas(width, height);
+	
 	const maze = new Maze(50, width - 320, height - 240);
 	gameSystem = new GameSystem(maze, new Player(), classifiers);
 }

@@ -4,6 +4,8 @@ class PlayState extends GameState {
 	imgLeft = loadImage("./Images/Left.jpg");
 	imgRight = loadImage("./Images/Right.jpg");
 	imgOpen = loadImage("./Images/Open.jpg");
+	width2 = 1500
+	height2 = 700
 
 	constructor(gameSystem) {
 		super(gameSystem);
@@ -11,6 +13,9 @@ class PlayState extends GameState {
 	}
 
 	start() {
+		width = this.width2
+		height = this.height2
+		createCanvas(this.width2 , this.height2)
 		this.listenToVisibilityChangedChannel();
 		this.gameSystem.maze.Generate();
 		this.gameSystem.player.Spawn(gameSystem.maze);
@@ -73,7 +78,7 @@ class PlayState extends GameState {
 		if (!this.gameSystem.ClassifiedFlippedVideo) {
 			return;
 		}
-		image(this.gameSystem.ClassifiedFlippedVideo, width - gameSystem.video.width, height - gameSystem.video.height);
+		image(this.gameSystem.ClassifiedFlippedVideo, this.width2/2 + 150, 100 , 500 , 400 );
 	}
 
 	printPicture() {
