@@ -16,7 +16,6 @@ function setup() {
 	width = 900
 	height = 700
 	createCanvas(width, height);
-	
 	const maze = new Maze(50, width - 320, height - 240);
 	gameSystem = new GameSystem(maze, new Player(), classifiers);
 }
@@ -26,6 +25,5 @@ function draw() {
 	checkUserInput();
 	gameSystem.update();
 	PlayerMovementWithLabel();
-	printLabel();
 }
 //testing

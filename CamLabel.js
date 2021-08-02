@@ -6,12 +6,12 @@ let directionClassifier;
 let verticalClassifier;
 let horizontalClassifier;
 
-function printLabel() {
+function printLabel(textwidth , textheight) {
 	textSize(30);
 	textAlign(CENTER, CENTER);
 	fill(200);
-	text(label, width / 2, height - 16);
-	text(suffix, width / 2 + 75, height - 16);
+	text(label, textwidth / 2, textheight - 16);
+	text(suffix, textwidth / 2 + 75, textheight - 16);
 }
 
 function classifyDirection(state) {

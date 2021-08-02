@@ -13,8 +13,7 @@ class PlayState extends GameState {
 	}
 
 	start() {
-		width = this.width2
-		height = this.height2
+		
 		createCanvas(this.width2 , this.height2)
 		this.listenToVisibilityChangedChannel();
 		this.gameSystem.maze.Generate();
@@ -68,6 +67,8 @@ class PlayState extends GameState {
 
 	execute() {
 		background("#D18700");
+		printLabel(this.width2,this.height2)
+
 		if (label !== "Loading model"){ // Show tutorial when the model loaded
 			this.printPicture();
 			tutorial();
