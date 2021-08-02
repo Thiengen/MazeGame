@@ -66,8 +66,8 @@ class PlayState extends GameState {
 
 	execute() {
 		background("#D18700");
-		playerwidth = this.width2
-		playerheight = this.height2
+		textwidth = this.width2
+		textheight = this.height2
 		if (label !== "Loading model"){ // Show tutorial when the model loaded
 			this.printPicture();
 			tutorial();
