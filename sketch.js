@@ -1,14 +1,13 @@
 let game;
 let config;
-let difficulty_modifier = 2;
+let difficulty_modifier = 5;
 let debug = false;
-// const model1 = "https://teachablemachine.withgoogle.com/models/e76KsCVS5/";
-// const model2 = "https://teachablemachine.withgoogle.com/models/58FWJDZhc/";
 
 function preload() {
 	document.addEventListener("OnAllAssetsReady", () => {
 		game.gameState.gameStatus = "Ready to start game !!!";
 		game.ready = true;
+		game.gameState.instructionText = "Ready? Open your hand palm \n to start the game !!!";
 		game.assets = config.getResourceAssets();
 	});
 
@@ -41,6 +40,7 @@ function preload() {
 		}
 	);
 
+	//Setup webcam video
 	config.loadAssets("Video", [VIDEO], (source) => {
 		const video = createCapture(source, () => {
 			config.onAssetReady();
@@ -49,23 +49,7 @@ function preload() {
 		return video;
 	});
 
-	config.loadAssets(
-		"Color",
-		[
-			{
-				background: color(27, 26, 23),
-				maze: color(172, 75, 28),
-				mazeWall: color(255, 213, 126),
-				player: color(252, 166, 82),
-				target: color(255, 239, 160),
-				text: color(255, 239, 160),
-			},
-		],
-		(source) => {
-			config.onAssetReady();
-			return source;
-		}
-	);
+	configureGameColor(color(27, 26, 23), color(172, 75, 28), color(255, 213, 126), color(252, 166, 82), color(255, 239, 160));
 }
 
 function setup() {
@@ -78,4 +62,24 @@ function draw() {
 	background(config.assets.getChildAssetByType("Color")[0].background);
 	game.update();
 	PlayerMovementWithLabel();
+}
+
+function configureGameColor(background, maze, mazeWall, player, target) {
+	config.loadAssets(
+		"Color",
+		[
+			{
+				background,
+				maze,
+				mazeWall,
+				player,
+				target,
+				text: color(255, 239, 160),
+			},
+		],
+		(source) => {
+			config.onAssetReady();
+			return source;
+		}
+	);
 }

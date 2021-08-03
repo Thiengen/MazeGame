@@ -8,26 +8,26 @@ class InitialState extends GameState {
 	}
 
 	start() {
-		console.log("Loading first page");
-		this.gameStatus = "Loading resources ...";
+		this.instructionText = "Be patient ! Dear user 😙😙😙";
 	}
 
 	execute() {
+		if (!this.gameSystem.ready) {
+			this.gameStatus = `Loaded ${config.loadedResource} %`;
+			rect(width / 2 - 50 * 2, height - 50, config.loadedResource * 2, 10);
+		}
+
+		textSize(60);
+		textAlign(CENTER);
+		textFont("Georgia");
+		fill(200);
+
+		text(this.GameName, width / 2, height / 2 - 200);
+		text(this.instructionText, width / 2, height / 2 + 20);
+
+		textSize(20);
 		text(this.gameStatus, width / 2, height - 100);
-		showText(this.GameName, width / 2, height / 2 - 200, 60, CENTER, "Georgia", color(200), color("black"), 3);
-
-		showText(this.instructionText, width / 2, height / 2 + 20, 45, CENTER, "Georgia", color(200), color("black"), 2);
 	}
-}
-
-function showText(value, x, y, size, alignment, font, color, stroke_color, stroke_weight) {
-	textSize(size);
-	textAlign(alignment);
-	textFont(font);
-	fill(color);
-	stroke(stroke_color);
-	strokeWeight(stroke_weight);
-	text(value, x, y);
 }
 
 function keyPressed() {

@@ -5,10 +5,12 @@ class configuration {
 	constructor() {
 		this.assets = new assets("General");
 		this.onAllAssetReadyEvent = new Event("OnAllAssetsReady");
+		this.loadedResource = 0;
 	}
 
 	onAssetReady() {
 		this.readyAssetCount++;
+		this.loadedResource = floor((this.readyAssetCount / this.assetCount) * 100);
 		// console.log("Ready");
 		if (this.readyAssetCount >= this.assetCount) {
 			console.log("All assets are ready to use !!!");
