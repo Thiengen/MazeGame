@@ -15,7 +15,7 @@ class PauseState extends GameState {
 		if (keyIsDown(ENTER)) {
 			console.log("Continue");
 			if (this.previousState) {
-				gameSystem.gameState = this.previousState;
+				this.gameSystem.gameState = this.previousState;
 				this.previousState.continue();
 			}
 		}

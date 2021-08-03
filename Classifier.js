@@ -1,11 +1,12 @@
-class Classifier {
-	constructor(name, model_URL) {
+class classifier {
+	constructor(name, model_URL, onReady) {
 		this.Name = name;
 		this.Value = ml5.imageClassifier(model_URL + "model.json");
 		this.Value.ready
 			.then(() => {
-				console.log(this.Name + " model is ready !!!");
+				// console.log(this.Name + " model is ready !!!");
 				this.IsReady = true;
+				onReady();
 			})
 			.catch((err) => console.log(err));
 	}
@@ -24,6 +25,9 @@ class Classifier {
 				gameSystem.ClassifiedFlippedVideo = image;
 				gotResult(results, image, gameSystem);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err);
+				console.log(this.Value);
+			});
 	}
 }

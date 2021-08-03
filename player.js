@@ -4,9 +4,7 @@ class Player {
 	Spawn(maze, spawning_point = null) {
 		this.target_cell = undefined;
 		this.maze = maze;
-		this.cell_in = spawning_point
-			? maze.GetCellByCoordinate(spawning_point.x, spawning_point.y)
-			: maze.GetCellByCoordinate(0, 0);
+		this.cell_in = spawning_point ? maze.GetCellByCoordinate(spawning_point.x, spawning_point.y) : maze.GetCellByCoordinate(0, 0);
 
 		if (!this.cell_in) {
 			console.error("Player is not spawn in a maze !\nThe game cannot start!");
@@ -58,10 +56,10 @@ class Player {
 }
 
 function checkUserInput() {
-	if (!(gameSystem.gameState instanceof PlayState)) {
+	if (!(game.gameState instanceof PlayState)) {
 		return;
 	}
-	const player = gameSystem.player;
+	const player = game.player;
 	if (player.target_cell && player.target_cell !== player.cell_in) {
 		return;
 	}
@@ -80,23 +78,24 @@ function checkUserInput() {
 }
 
 function PlayerMovementWithLabel() {
-	if (!(gameSystem.gameState instanceof PlayState)) {
+	if (!(game.gameState instanceof PlayState)) {
 		return;
 	}
-	const player = gameSystem.player;
+	const player = game.player;
+	const result = game.gameState.prediction;
 	if (player.target_cell && player.target_cell !== player.cell_in) {
 		return;
 	}
-	if (label === "Up" && !player.cell_in.walls[0].is_active) {
+	if (result === "Up" && !player.cell_in.walls[0].is_active) {
 		player.Move(directions.TOP);
 		return;
-	} else if (label === "Right" && !player.cell_in.walls[1].is_active) {
+	} else if (result === "Right" && !player.cell_in.walls[1].is_active) {
 		player.Move(directions.RIGHT);
 		return;
-	} else if (label === "Down" && !player.cell_in.walls[2].is_active) {
+	} else if (result === "Down" && !player.cell_in.walls[2].is_active) {
 		player.Move(directions.BOTTOM);
 		return;
-	} else if (label === "Left" && !player.cell_in.walls[3].is_active) {
+	} else if (result === "Left" && !player.cell_in.walls[3].is_active) {
 		player.Move(directions.LEFT);
 	}
 }

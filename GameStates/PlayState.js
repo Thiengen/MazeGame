@@ -1,9 +1,5 @@
 class PlayState extends GameState {
-	imgUp = loadImage("./Images/Up.jpg");
-	imgDown = loadImage("./Images/Down.jpg");
-	imgLeft = loadImage("./Images/Left.jpg");
-	imgRight = loadImage("./Images/Right.jpg");
-	imgOpen = loadImage("./Images/Open.jpg");
+	directionClassifier;
 
 	constructor(gameSystem) {
 		super(gameSystem);
@@ -13,10 +9,29 @@ class PlayState extends GameState {
 	start() {
 		this.listenToVisibilityChangedChannel();
 		this.gameSystem.maze.Generate();
-		this.gameSystem.player.Spawn(gameSystem.maze);
+		this.gameSystem.player.Spawn(this.gameSystem.maze, { x: 9, y: 8 });
 		// Destination set next to player this.destination = this.gameSystem.maze.GetCellByCoordinate(this.gameSystem.maze.rows_number / 2 + 1, this.gameSystem.maze.columns_number / 2);
 		this.destination = this.gameSystem.maze.all_cells[this.gameSystem.maze.all_cells.length - 1];
-		this.gameSystem.Classifiers[0].classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
+		this.directionClassifier = this.gameSystem.GetClassifierByName("Direction");
+		this.directionClassifier.classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
+
+		const imageAssets = this.gameSystem.assets.getChildAssetByType("Image");
+
+		this.referenceImage = {
+			Up: imageAssets[0],
+			Down: imageAssets[1],
+			Left: imageAssets[2],
+			Right: imageAssets[3],
+		};
+
+		const colorAssets = this.gameSystem.assets.getChildAssetByType("Color")[0];
+
+		this.gameColour = {
+			maze: colorAssets.maze,
+			mazeWall: colorAssets.mazeWall,
+			player: colorAssets.player,
+			target: colorAssets.target,
+		};
 	}
 
 	listenToVisibilityChangedChannel() {
@@ -35,55 +50,60 @@ class PlayState extends GameState {
 
 	continue() {
 		this.listenToVisibilityChangedChannel();
-		this.gameSystem.Classifiers[0].classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
+		this.directionClassifier.classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
 	}
 
 	pause(source) {
+		console.log("Pausing...");
 		source.gameSystem.changeState(PauseState);
 		source.gameSystem.gameState.previousState = this;
-		source.gameSystem.ClassifiedFlippedVideo = null;
 	}
 
 	gotDirectionResults(results, image, gameSystem) {
-		if (results[0].label === "Idle") {
-			label = results[0].label;
-			gameSystem.Classifiers[0].classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
+		const dirClassifier = gameSystem.gameState.directionClassifier;
+		if (results[0].label === "Idle" && dirClassifier) {
+			gameSystem.gameState.prediction = results[0].label;
+			dirClassifier.classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
 			return;
 		}
-		const classifier = gameSystem.GetClassifierByName(results[0].label);
+		classifier = gameSystem.GetClassifierByName(results[0].label);
 		if (!classifier) {
 			return;
 		}
 		classifier.classify(gameSystem, image, (results, image, gameSystem) => {
-			label = results[0].label;
-			gameSystem.Classifiers[0].classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
+			gameSystem.gameState.prediction = results[0].label;
+			dirClassifier.classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
 		});
 	}
 
 	execute() {
-		background("#D18700");
-		this.printPicture();
+		this.displayPicture();
 		tutorial();
 
-		this.gameSystem.maze.Render(color("red"), color("#FFB300"));
-		this.gameSystem.player.Render(color("#D92721"));
+		this.gameSystem.maze.Render(this.gameColour.mazeWall, this.gameColour.maze);
+		this.gameSystem.player.Render(this.gameColour.player);
 		this.checkHasWon();
 		if (!this.gameSystem.ClassifiedFlippedVideo) {
 			return;
 		}
-		image(this.gameSystem.ClassifiedFlippedVideo, width - gameSystem.video.width, height - gameSystem.video.height);
+		image(this.gameSystem.ClassifiedFlippedVideo, width - this.gameSystem.video.width, height - this.gameSystem.video.height);
+
+		if (!this.prediction) {
+			return;
+		}
+		text(this.prediction, width / 2, height - 100);
 	}
 
-	printPicture() {
-		image(this.imgUp, 570, 0, 200, 185);
-		image(this.imgDown, 570, 225, 250, 175);
-		image(this.imgOpen, 570, 460, 250, 175);
-		image(this.imgLeft, 290, 460, 250, 175);
-		image(this.imgRight, 10, 460, 250, 175);
+	displayPicture() {
+		image(this.referenceImage.Up, width - 200, 0, 200, 185);
+		image(this.referenceImage.Down, width - 250, 250, 250, 175);
+		// image(this.imgOpen, 570, 460, 250, 175);
+		image(this.referenceImage.Left, 10, height - 175, 250, 175);
+		image(this.referenceImage.Right, 290, height - 175, 250, 175);
 	}
 
 	checkHasWon() {
-		this.destination.Show(color("grey"), color("grey"));
+		this.destination.Show(this.gameColour.mazeWall, this.gameColour.target);
 		if (this.gameSystem.player.cell_in === this.destination) {
 			document.removeEventListener("visibilitychange", this.onVisibilityChange);
 			this.gameSystem.maze.clearCache();

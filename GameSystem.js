@@ -1,21 +1,14 @@
-class GameSystem {
+class gameSystem {
 	ClassifiedFlippedVideo;
 
-	constructor(maze, player, classifiers) {
+	constructor(maze, player) {
 		this.maze = maze;
 		this.player = player;
-		this.Classifiers = classifiers;
 		this.gameState = new InitialState(this);
-		this.video = createCapture(VIDEO, () => console.log("Video stream is ready !!!"));
-		this.video.size(320, 240);
-		this.video.hide();
 	}
 
 	update() {
-		
 		this.gameState.execute();
-
-		
 	}
 
 	changeState(state) {
@@ -23,25 +16,17 @@ class GameSystem {
 	}
 
 	GetClassifierByName(name) {
-		for (const classifier of this.Classifiers) {
+		for (const classifier of this.assets.getChildAssetByType("Model")) {
 			if (classifier.Name === name) {
 				return classifier;
 			}
 		}
-		console.warn("Classifier not found !!!");
+		console.log("Classifier not found !!!");
 		return null;
 	}
 
-	ModelsReady() {
-		for (let i = 0; i < this.Classifiers.length; i++) {
-			if (!this.Classifiers[i].IsReady) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	GetFlippedVideo() {
+		this.video = this.assets.getChildAssetByType("Video")[0];
 		return ml5.flipImage(this.video);
 	}
 }
