@@ -15,6 +15,6 @@ class WonState extends GameState {
 	}
 
 	execute() {
-		showText("CONGRATS, You have cleared this level !!!", width / 2, height / 2, 45, CENTER, "Georgia", color(200), color("black"), 2);
+		text("CONGRATS, You have cleared this level !!!", width / 2, height / 2);
 	}
 }
