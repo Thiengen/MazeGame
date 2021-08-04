@@ -18,12 +18,17 @@ class configuration {
 		}
 	}
 
-	loadAssets(assetType, sources, getData) {
+	loadAssets(assetType, sources, getData = undefined) {
 		const sourceAssets = new assets(assetType);
-		for (const source of sources) {
-			getData ? sourceAssets.push(getData(source)) : sourceAssets.push(source);
-		}
-		this.assetCount += sourceAssets.length;
+		this.assetCount += Object.keys(sources).length;
+		const dataGetter = getData
+			? getData
+			: (sources) => {
+					this.readyAssetCount += Object.keys(sources).length - 1;
+					this.onAssetReady();
+					return sources;
+			  };
+		sourceAssets.fetch(dataGetter(sources));
 		this.assets.childAssets.push(sourceAssets);
 	}
 
@@ -36,11 +41,14 @@ class configuration {
 	}
 }
 
-class assets extends Array {
+class assets {
 	constructor(type) {
-		super();
 		this.type = type;
 		this.childAssets = [];
+	}
+
+	fetch(data) {
+		this.data = data;
 	}
 
 	getChildAssetByType(type) {

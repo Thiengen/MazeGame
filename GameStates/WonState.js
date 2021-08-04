@@ -8,10 +8,17 @@ class WonState extends GameState {
 		const nextLevelButton = createButton("Next Level");
 		nextLevelButton.mousePressed(() => {
 			//if ( label == "Next"){
-			this.gameSystem.maze.SetSize(this.gameSystem.maze.cell_length * (1 - difficulty_modifier / 100), width - 320, height - 240);
+			this.modifyDifficulty();
 			gameSystem.gameState = new PlayState(this.gameSystem);
 			nextLevelButton.remove();
 		});
+	}
+
+	modifyDifficulty() {
+		const data = this.gameSystem.assets.getChildAssetByType("Difficulty").data;
+		this.gameSystem.maze.SetSize(this.gameSystem.maze.cell_length * (1 - data.difficultyOffset / 100), width - 320, height - 240);
+		data.difficultyOffset += data.difficultySpeed;
+		data.difficultySpeed += data.difficultyAcceleration;
 	}
 
 	execute() {

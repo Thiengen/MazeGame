@@ -1,6 +1,5 @@
 let game;
 let config;
-let difficulty_modifier = 5;
 let debug = false;
 
 function preload() {
@@ -13,36 +12,41 @@ function preload() {
 
 	config = new configuration();
 
-	config.loadAssets("Image", ["./Images/Up.jpg", "./Images/Down.jpg", "./Images/Left.jpg", "./Images/Right.jpg"], (source) => {
-		return loadImage(source, () => config.onAssetReady());
-	});
+	config.loadAssets(
+		"Image",
+		{ Up: "./Images/Up.jpg", Down: "./Images/Down.jpg", Left: "./Images/Left.jpg", Right: "./Images/Right.jpg" },
+		(source) => {
+			let images = {};
+			for (const key in source) {
+				const image = loadImage(source[key], () => config.onAssetReady());
+				images[key] = image;
+			}
+			return images;
+		}
+	);
 
 	config.loadAssets(
 		"Model",
-		[
-			{
-				name: "Direction",
-				URL: "https://teachablemachine.withgoogle.com/models/7WRHgCGqz/",
-			},
-			{
-				name: "Vertical",
-				URL: "https://teachablemachine.withgoogle.com/models/gvwdkEKSF/",
-			},
-			{
-				name: "Horizontal",
-				URL: "https://teachablemachine.withgoogle.com/models/9r5lWuqRi/",
-			},
-		],
+		{
+			Direction: "https://teachablemachine.withgoogle.com/models/7WRHgCGqz/",
+			Vertical: "https://teachablemachine.withgoogle.com/models/gvwdkEKSF/",
+			Horizontal: "https://teachablemachine.withgoogle.com/models/9r5lWuqRi/",
+		},
 		(source) => {
-			return new classifier(source.name, source.URL, () => {
-				config.onAssetReady();
-			});
+			let models = {};
+			for (const key in source) {
+				const model = new classifier(key, source[key], () => {
+					config.onAssetReady();
+				});
+				models[key] = model;
+			}
+			return models;
 		}
 	);
 
 	//Setup webcam video
-	config.loadAssets("Video", [VIDEO], (source) => {
-		const video = createCapture(source, () => {
+	config.loadAssets("Video", { video: VIDEO }, (source) => {
+		const video = createCapture(source.video, () => {
 			config.onAssetReady();
 		}).hide();
 		video.size(240, 180);
@@ -50,6 +54,12 @@ function preload() {
 	});
 
 	configureGameColor(color(27, 26, 23), color(172, 75, 28), color(255, 213, 126), color(252, 166, 82), color(255, 239, 160));
+
+	config.loadAssets("Difficulty", {
+		difficultyOffset: 2,
+		difficultySpeed: 1,
+		difficultyAcceleration: 0.5,
+	});
 }
 
 function setup() {
@@ -59,7 +69,7 @@ function setup() {
 }
 
 function draw() {
-	background(config.assets.getChildAssetByType("Color")[0].background);
+	background(config.assets.getChildAssetByType("Color").data.background);
 	game.update();
 	PlayerMovementWithLabel();
 }
@@ -67,18 +77,18 @@ function draw() {
 function configureGameColor(background, maze, mazeWall, player, target) {
 	config.loadAssets(
 		"Color",
-		[
-			{
-				background,
-				maze,
-				mazeWall,
-				player,
-				target,
-				text: color(255, 239, 160),
-			},
-		],
+		{
+			background,
+			maze,
+			mazeWall,
+			player,
+			target,
+			text: color(255, 239, 160),
+		},
 		(source) => {
-			config.onAssetReady();
+			for (let i = 0; i < Object.keys(source).length; i++) {
+				config.onAssetReady();
+			}
 			return source;
 		}
 	);

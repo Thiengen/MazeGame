@@ -12,19 +12,17 @@ class PlayState extends GameState {
 		this.gameSystem.player.Spawn(this.gameSystem.maze, { x: 9, y: 8 });
 		// Destination set next to player this.destination = this.gameSystem.maze.GetCellByCoordinate(this.gameSystem.maze.rows_number / 2 + 1, this.gameSystem.maze.columns_number / 2);
 		this.destination = this.gameSystem.maze.all_cells[this.gameSystem.maze.all_cells.length - 1];
-		this.directionClassifier = this.gameSystem.GetClassifierByName("Direction");
-		this.directionClassifier.classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
 
-		const imageAssets = this.gameSystem.assets.getChildAssetByType("Image");
+		const imageAssets = this.gameSystem.assets.getChildAssetByType("Image").data;
 
 		this.referenceImage = {
-			Up: imageAssets[0],
-			Down: imageAssets[1],
-			Left: imageAssets[2],
-			Right: imageAssets[3],
+			Up: imageAssets.Up,
+			Down: imageAssets.Down,
+			Left: imageAssets.Left,
+			Right: imageAssets.Right,
 		};
 
-		const colorAssets = this.gameSystem.assets.getChildAssetByType("Color")[0];
+		const colorAssets = this.gameSystem.assets.getChildAssetByType("Color").data;
 
 		this.gameColour = {
 			maze: colorAssets.maze,
@@ -32,6 +30,9 @@ class PlayState extends GameState {
 			player: colorAssets.player,
 			target: colorAssets.target,
 		};
+
+		this.directionClassifier = this.gameSystem.GetClassifierByName("Direction");
+		this.directionClassifier.classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
 	}
 
 	listenToVisibilityChangedChannel() {
@@ -71,7 +72,7 @@ class PlayState extends GameState {
 			return;
 		}
 		classifier.classify(gameSystem, image, (results, image, gameSystem) => {
-			gameSystem.gameState.prediction = results[0].label;
+			gameSystem.gameState.prediction = `${results[0].label}`;
 			dirClassifier.classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
 		});
 	}
@@ -91,7 +92,7 @@ class PlayState extends GameState {
 		if (!this.prediction) {
 			return;
 		}
-		text(this.prediction, width / 2, height - 100);
+		text(this.prediction, width / 2, height - 200);
 	}
 
 	displayPicture() {

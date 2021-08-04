@@ -16,9 +16,10 @@ class gameSystem {
 	}
 
 	GetClassifierByName(name) {
-		for (const classifier of this.assets.getChildAssetByType("Model")) {
-			if (classifier.Name === name) {
-				return classifier;
+		const classifiers = this.assets.getChildAssetByType("Model").data;
+		for (const key in classifiers) {
+			if (key === name) {
+				return classifiers[key];
 			}
 		}
 		console.log("Classifier not found !!!");
@@ -26,7 +27,7 @@ class gameSystem {
 	}
 
 	GetFlippedVideo() {
-		this.video = this.assets.getChildAssetByType("Video")[0];
+		this.video = this.assets.getChildAssetByType("Video").data;
 		return ml5.flipImage(this.video);
 	}
 }
