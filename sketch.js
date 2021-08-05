@@ -1,6 +1,8 @@
 let game;
 let config;
 let debug = false;
+let width = 900;
+let height = 700
 
 function preload() {
 	document.addEventListener("OnAllAssetsReady", () => {
@@ -14,7 +16,7 @@ function preload() {
 
 	config.loadAssets(
 		"Image",
-		{ Up: "./Images/Up.jpg", Down: "./Images/Down.jpg", Left: "./Images/Left.jpg", Right: "./Images/Right.jpg" },
+		{ Up: "./Images/Up.jpg", Down: "./Images/Down.jpg",Open: "./Images/Open.jpg", Left: "./Images/Left.jpg", Right: "./Images/Right.jpg" },
 		(source) => {
 			let images = {};
 			for (const key in source) {
@@ -53,8 +55,8 @@ function preload() {
 		return video;
 	});
 
-	configureGameColor(color(27, 26, 23), color(172, 75, 28), color(255, 213, 126), color(252, 166, 82), color(255, 239, 160));
-
+	configureGameColor(color(0), color(172, 75, 28), color(255, 213, 126), color(252, 166, 82), color(255, 239, 160));
+//Background , Maze , Lines && reach point , Player , Reachpoint lines
 	config.loadAssets("Difficulty", {
 		difficultyOffset: 2,
 		difficultySpeed: 1,
@@ -63,7 +65,7 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(900, 700);
+	createCanvas(width, height);
 	const maze = new Maze(50, width - 320, height - 240);
 	game = new gameSystem(maze, new Player());
 }
@@ -83,7 +85,7 @@ function configureGameColor(background, maze, mazeWall, player, target) {
 			mazeWall,
 			player,
 			target,
-			text: color(255, 239, 160),
+			text: color(200),
 		},
 		(source) => {
 			for (let i = 0; i < Object.keys(source).length; i++) {

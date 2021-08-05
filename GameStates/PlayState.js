@@ -1,12 +1,14 @@
 class PlayState extends GameState {
 	directionClassifier;
-
+    width2 = 1500
+    height2 = 700
 	constructor(gameSystem) {
 		super(gameSystem);
 		this.start();
 	}
 
 	start() {
+        createCanvas(this.width2 , this.height2)
 		this.listenToVisibilityChangedChannel();
 		this.gameSystem.maze.Generate();
 		this.gameSystem.player.Spawn(this.gameSystem.maze, { x: 9, y: 8 });
@@ -18,6 +20,7 @@ class PlayState extends GameState {
 		this.referenceImage = {
 			Up: imageAssets.Up,
 			Down: imageAssets.Down,
+			Open: imageAssets.Open,
 			Left: imageAssets.Left,
 			Right: imageAssets.Right,
 		};
@@ -87,7 +90,7 @@ class PlayState extends GameState {
 		if (!this.gameSystem.ClassifiedFlippedVideo) {
 			return;
 		}
-		image(this.gameSystem.ClassifiedFlippedVideo, width - this.gameSystem.video.width, height - this.gameSystem.video.height);
+		image(this.gameSystem.ClassifiedFlippedVideo, this.width2/2 + 150, 100 , 500 , 400);
 
 		if (!this.prediction) {
 			return;
@@ -98,7 +101,7 @@ class PlayState extends GameState {
 	displayPicture() {
 		image(this.referenceImage.Up, width - 200, 0, 200, 185);
 		image(this.referenceImage.Down, width - 250, 250, 250, 175);
-		// image(this.imgOpen, 570, 460, 250, 175);
+		image(this.referenceImage.Open, width - 300, 500, 250, 175);
 		image(this.referenceImage.Left, 10, height - 175, 250, 175);
 		image(this.referenceImage.Right, 290, height - 175, 250, 175);
 	}

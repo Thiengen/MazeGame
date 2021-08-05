@@ -22,6 +22,6 @@ class WonState extends GameState {
 	}
 
 	execute() {
-		text("CONGRATS, You have cleared this level !!!", width / 2, height / 2);
+		text("CONGRATS, You have cleared this level !!!",  1500 / 2, 700 / 2);
 	}
 }
