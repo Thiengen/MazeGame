@@ -6,9 +6,9 @@ let height = 700
 
 function preload() {
 	document.addEventListener("OnAllAssetsReady", () => {
-		game.gameState.gameStatus = "Ready to start game !!!";
+		game.gameState.gameStatus = "";
 		game.ready = true;
-		game.gameState.instructionText = "Ready? Open your hand palm \n to start the game !!!";
+		game.gameState.instructionText = "Ready ? \n Open your hand palm \n to start the game !!!";
 		game.assets = config.getResourceAssets();
 	});
 
@@ -16,7 +16,7 @@ function preload() {
 
 	config.loadAssets(
 		"Image",
-		{ Up: "./Images/Up.jpg", Down: "./Images/Down.jpg",Open: "./Images/Open.jpg", Left: "./Images/Left.jpg", Right: "./Images/Right.jpg" },
+		{ Up: "./Images/Up.jpeg", Down: "./Images/Down.jpeg",Open: "./Images/Open.jpg", Left: "./Images/Left.jpeg", Right: "./Images/Right.jpeg" },
 		(source) => {
 			let images = {};
 			for (const key in source) {
@@ -55,7 +55,7 @@ function preload() {
 		return video;
 	});
 
-	configureGameColor(color(0), color(172, 75, 28), color(255, 213, 126), color(252, 166, 82), color(255, 239, 160));
+	configureGameColor(color("#FFB740"), color("#DF711B"), color(255, 213, 126), color("#64C9CF"), color(255));
 //Background , Maze , Lines && reach point , Player , Reachpoint lines
 	config.loadAssets("Difficulty", {
 		difficultyOffset: 2,

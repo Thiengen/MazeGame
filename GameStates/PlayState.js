@@ -90,20 +90,21 @@ class PlayState extends GameState {
 		if (!this.gameSystem.ClassifiedFlippedVideo) {
 			return;
 		}
-		image(this.gameSystem.ClassifiedFlippedVideo, this.width2/2 + 150, 100 , 500 , 400);
+		image(this.gameSystem.ClassifiedFlippedVideo, this.width2/2 + 200 , 150 , 500 , 400);
 
 		if (!this.prediction) {
 			return;
 		}
-		text(this.prediction, width / 2, height - 200);
+		fill(50)
+		text(this.prediction, this.width2 * 4 / 5, this.height2 - 100);
 	}
 
 	displayPicture() {
-		image(this.referenceImage.Up, width - 200, 0, 200, 185);
-		image(this.referenceImage.Down, width - 250, 250, 250, 175);
-		image(this.referenceImage.Open, width - 300, 500, 250, 175);
-		image(this.referenceImage.Left, 10, height - 175, 250, 175);
-		image(this.referenceImage.Right, 290, height - 175, 250, 175);
+		image(this.referenceImage.Up, 580, 10 , 175, 175);
+		image(this.referenceImage.Down, 580, 235, 175, 175);
+		image(this.referenceImage.Open, 580, 460, 175, 175);
+		image(this.referenceImage.Left, 310, 460, 175, 175);
+		image(this.referenceImage.Right, 40 , 460, 175, 175);
 	}
 
 	checkHasWon() {
