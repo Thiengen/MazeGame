@@ -28,7 +28,7 @@ class configuration {
 					this.onAssetReady();
 					return sources;
 			  };
-		sourceAssets.fetch(dataGetter(sources));
+		sourceAssets.insertData(dataGetter(sources));
 		this.assets.childAssets.push(sourceAssets);
 	}
 
@@ -47,7 +47,7 @@ class assets {
 		this.childAssets = [];
 	}
 
-	fetch(data) {
+	insertData(data) {
 		this.data = data;
 	}
 

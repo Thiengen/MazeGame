@@ -11,7 +11,7 @@ class classifier {
 			.catch((err) => console.log(err));
 	}
 
-	classify(gameSystem, image, gotResult) {
+	async classify(gameSystem, image) {
 		if (!image) {
 			console.warn("There is no image to classify!");
 			return;
@@ -20,14 +20,11 @@ class classifier {
 			console.log("Classifier only classfy images during play state !");
 			return;
 		}
-		this.Value.classify(image)
-			.then((results) => {
-				gameSystem.ClassifiedFlippedVideo = image;
-				gotResult(results, image, gameSystem);
-			})
-			.catch((err) => {
-				console.log(err);
-				console.log(this.Value);
-			});
+		const results = await this.Value.classify(image).catch((err) => console.log(err));
+		gameSystem.ClassifiedFlippedVideo = image;
+		return {
+			results,
+			image,
+		};
 	}
 }

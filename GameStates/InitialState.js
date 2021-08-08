@@ -14,6 +14,9 @@ class InitialState extends GameState {
 	execute() {
 		if (!this.gameSystem.ready) {
 			this.gameStatus = `Loaded ${config.loadedResource} %`;
+			fill(200);
+			rect(width / 2 - 50 * 2, height - 50, 100 * 2, 10);
+			fill(color(252, 166, 82));
 			rect(width / 2 - 50 * 2, height - 50, config.loadedResource * 2, 10);
 		}
 

@@ -31,8 +31,15 @@ class PlayState extends GameState {
 			target: colorAssets.target,
 		};
 
-		this.directionClassifier = this.gameSystem.GetClassifierByName("Direction");
-		this.directionClassifier.classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
+		this.directionClassifier = this.gameSystem.getClassifierByName("Direction");
+		this.repeatClassification();
+	}
+
+	async repeatClassification() {
+		this.directionClassifier
+			.classify(this.gameSystem, this.gameSystem.getFlippedVideo())
+			.then((response) => this.gotDirectionResults(response.results, response.image))
+			.catch((err) => console.log(err));
 	}
 
 	listenToVisibilityChangedChannel() {
@@ -51,7 +58,7 @@ class PlayState extends GameState {
 
 	continue() {
 		this.listenToVisibilityChangedChannel();
-		this.directionClassifier.classify(this.gameSystem, this.gameSystem.GetFlippedVideo(), this.gotDirectionResults);
+		this.repeatClassification();
 	}
 
 	pause(source) {
@@ -60,21 +67,22 @@ class PlayState extends GameState {
 		source.gameSystem.gameState.previousState = this;
 	}
 
-	gotDirectionResults(results, image, gameSystem) {
-		const dirClassifier = gameSystem.gameState.directionClassifier;
-		if (results[0].label === "Idle" && dirClassifier) {
-			gameSystem.gameState.prediction = results[0].label;
-			dirClassifier.classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
+	gotDirectionResults(results, image) {
+		if (results[0].label === "Idle" && this.directionClassifier) {
+			this.prediction = results[0].label;
+			this.repeatClassification();
 			return;
 		}
-		classifier = gameSystem.GetClassifierByName(results[0].label);
-		if (!classifier) {
-			return;
-		}
-		classifier.classify(gameSystem, image, (results, image, gameSystem) => {
-			gameSystem.gameState.prediction = `${results[0].label}`;
-			dirClassifier.classify(gameSystem, gameSystem.GetFlippedVideo(), gameSystem.gameState.gotDirectionResults);
-		});
+
+		const classifier = this.gameSystem.getClassifierByName(results[0].label);
+
+		classifier
+			.classify(this.gameSystem, image)
+			.then((response) => {
+				this.prediction = `${response.results[0].label}`;
+				this.repeatClassification();
+			})
+			.catch((err) => console.log(err));
 	}
 
 	execute() {

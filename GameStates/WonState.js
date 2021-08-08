@@ -5,12 +5,28 @@ class WonState extends GameState {
 	}
 
 	start() {
+		const guiColorAssets = this.gameSystem.assets.getChildAssetByType("Color").data;
+
 		const nextLevelButton = createButton("Next Level");
+
+		nextLevelButton.style("font-size", "25px");
+		nextLevelButton.style("color", guiColorAssets.text);
+		nextLevelButton.style("background-color", guiColorAssets.button);
+
+		const buttonSize = {
+			width: 150,
+			height: 50,
+		};
+
+		nextLevelButton.size(buttonSize.width, buttonSize.height);
+		nextLevelButton.position(width - buttonSize.width, height - buttonSize.height);
+
 		nextLevelButton.mousePressed(() => {
 			//if ( label == "Next"){
 			this.modifyDifficulty();
 			gameSystem.gameState = new PlayState(this.gameSystem);
 			nextLevelButton.remove();
+			loop();
 		});
 	}
 
@@ -23,5 +39,6 @@ class WonState extends GameState {
 
 	execute() {
 		text("CONGRATS, You have cleared this level !!!", width / 2, height / 2);
+		noLoop();
 	}
 }

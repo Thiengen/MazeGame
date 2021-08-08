@@ -15,7 +15,7 @@ class gameSystem {
 		new state(this);
 	}
 
-	GetClassifierByName(name) {
+	getClassifierByName(name) {
 		const classifiers = this.assets.getChildAssetByType("Model").data;
 		for (const key in classifiers) {
 			if (key === name) {
@@ -26,7 +26,7 @@ class gameSystem {
 		return null;
 	}
 
-	GetFlippedVideo() {
+	getFlippedVideo() {
 		this.video = this.assets.getChildAssetByType("Video").data;
 		return ml5.flipImage(this.video);
 	}
