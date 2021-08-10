@@ -25,14 +25,14 @@ class WonState extends GameState {
 		nextLevelButton.mousePressed(() => {
 			//if ( label == "Next"){
 			this.modifyDifficulty();
-			gameSystem.gameState = new PlayState(this.gameSystem);
+			this.gameSystem.changeState(PlayState);
 			nextLevelButton.remove();
 		});
 	}
 
 	modifyDifficulty() {
 		const data = this.gameSystem.assets.getChildAssetByType("Difficulty").data;
-		this.gameSystem.maze.SetSize(this.gameSystem.maze.cell_length * (1 - data.difficultyOffset / 100), width - 320, height - 240);
+		this.gameSystem.maze.SetSize(this.gameSystem.maze.cell_length * (1 - data.difficultyOffset / 100), 580, 460);
 		data.difficultyOffset += data.difficultySpeed;
 		data.difficultySpeed += data.difficultyAcceleration;
 	}
