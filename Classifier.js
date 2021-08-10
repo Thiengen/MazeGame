@@ -21,7 +21,6 @@ class classifier {
 			return;
 		}
 		const results = await this.Value.classify(image).catch((err) => console.log(err));
-		gameSystem.ClassifiedFlippedVideo = image;
 		return {
 			results,
 			image,

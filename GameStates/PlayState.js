@@ -84,7 +84,6 @@ class PlayState extends GameState {
 			.then((response) => {
 				this.prediction = `${response.results[0].label}`;
 				this.gameSystem.player.Move(this.prediction);
-				this.repeatClassification();
 			})
 			.catch((err) => console.log(err));
 	}
@@ -96,10 +95,7 @@ class PlayState extends GameState {
 		this.gameSystem.maze.Render(this.gameColour.mazeWall, this.gameColour.maze);
 		this.gameSystem.player.Render(this.gameColour.player);
 		this.checkHasWon();
-		if (!this.gameSystem.ClassifiedFlippedVideo) {
-			return;
-		}
-		image(this.gameSystem.ClassifiedFlippedVideo, this.width2 / 2 + 200, 150, 500, 400);
+		image(this.gameSystem.getFlippedVideo(), this.width2 / 2 + 200, 150, 500, 400);
 
 		if (!this.prediction) {
 			return;

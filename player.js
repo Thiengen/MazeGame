@@ -19,6 +19,7 @@ class Player {
 			this.position.lerp(this.target_cell.absolute_v, this.speed * deltaTime * 0.001);
 			if (this.target_cell.absolute_v.dist(this.position) <= 0.01) {
 				this.cell_in = this.target_cell;
+				game.gameState.repeatClassification();
 			}
 		}
 
@@ -34,7 +35,10 @@ class Player {
 	}
 
 	Move(direction) {
-		if (this.blockByWall(direction) || this.target_cell !== this.cell_in) return;
+		if (this.blockByWall(direction) || this.target_cell !== this.cell_in) {
+			game.gameState.repeatClassification();
+			return;
+		}
 		const movingDir = directions[direction];
 		const targetCellPosition = p5.Vector.add(createVector(movingDir.x, movingDir.y), this.cell_in.vector);
 		this.target_cell = this.maze.GetCellByCoordinate(targetCellPosition.x, targetCellPosition.y);
@@ -44,15 +48,4 @@ class Player {
 		const wallIndex = Object.keys(directions).indexOf(direction);
 		return this.cell_in.walls[wallIndex].is_active;
 	}
-}
-
-function PlayerMovementWithLabel() {
-	if (!(game.gameState instanceof PlayState)) {
-		return;
-	}
-	const player = game.player;
-	const result = game.gameState.prediction;
-	if (player.target_cell !== player.cell_in) return;
-	if (!result || result === "Idle") return;
-	player.Move(result);
 }
