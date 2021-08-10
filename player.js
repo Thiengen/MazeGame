@@ -38,22 +38,6 @@ class Player {
 		console.log(targetCellPosition);
 		this.target_cell = this.maze.GetCellByCoordinate(targetCellPosition.x, targetCellPosition.y);
 	}
-
-	MoveToCell(direction, coordinate) {
-		switch (direction) {
-			case directions.TOP:
-				return createVector(0, -1).add(coordinate.x, coordinate.y);
-			case directions.RIGHT:
-				return createVector(1, 0).add(coordinate.x, coordinate.y);
-			case directions.BOTTOM:
-				return createVector(0, 1).add(coordinate.x, coordinate.y);
-			case directions.LEFT:
-				return createVector(-1, 0).add(coordinate.x, coordinate.y);
-			default:
-				console.warn("Direction not given");
-				break;
-		}
-	}
 }
 
 function PlayerMovementWithLabel() {
