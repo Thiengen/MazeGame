@@ -55,28 +55,6 @@ class Player {
 	}
 }
 
-function checkUserInput() {
-	if (!(game.gameState instanceof PlayState)) {
-		return;
-	}
-	const player = game.player;
-	if (player.target_cell && player.target_cell !== player.cell_in) {
-		return;
-	}
-	if (keyIsDown(87) && !player.cell_in.walls[0].is_active) {
-		player.Move(directions.TOP);
-		return;
-	} else if (keyIsDown(65) && !player.cell_in.walls[3].is_active) {
-		player.Move(directions.LEFT);
-		return;
-	} else if (keyIsDown(68) && !player.cell_in.walls[1].is_active) {
-		player.Move(directions.RIGHT);
-		return;
-	} else if (keyIsDown(83) && !player.cell_in.walls[2].is_active) {
-		player.Move(directions.BOTTOM);
-	}
-}
-
 function PlayerMovementWithLabel() {
 	if (!(game.gameState instanceof PlayState)) {
 		return;
