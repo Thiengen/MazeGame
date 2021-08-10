@@ -15,7 +15,7 @@ function preload() {
 
 	config.loadAssets(
 		"Image",
-		{ Up: "./Images/Up.jpg", Down: "./Images/Down.jpg", Left: "./Images/Left.jpg", Right: "./Images/Right.jpg" },
+		{ Up: "./Images/Up.jpeg", Down: "./Images/Down.jpeg", Open: "./Images/Open.jpg", Left: "./Images/Left.jpeg", Right: "./Images/Right.jpeg" },
 		(source) => {
 			let images = {};
 			for (const key in source) {
@@ -54,16 +54,23 @@ function preload() {
 		return video;
 	});
 
+	//Background , Maze , Lines && reach point , Player , Reachpoint lines
+	config.loadAssets("Difficulty", {
+		difficultyOffset: 2,
+		difficultySpeed: 1,
+		difficultyAcceleration: 0.5,
+	});
+
 	config.loadAssets(
 		"Color",
 		{
-			background: color(27, 26, 23),
-			maze: color(172, 75, 28),
+			background: color("#FFB740"),
+			maze: color("#DF711B"),
 			mazeWall: color(255, 213, 126),
-			player: color(252, 166, 82),
-			target: color(255, 239, 160),
-			text: color(255, 213, 126),
-			button: color(106, 73, 43),
+			player: color("#64C9CF"),
+			target: color(255),
+			text: color(200),
+			button: color(100),
 		},
 		(source) => {
 			for (let i = 0; i < Object.keys(source).length; i++) {
@@ -72,12 +79,6 @@ function preload() {
 			return source;
 		}
 	);
-
-	config.loadAssets("Difficulty", {
-		difficultyOffset: 2,
-		difficultySpeed: 1,
-		difficultyAcceleration: 0.5,
-	});
 }
 
 function setup() {

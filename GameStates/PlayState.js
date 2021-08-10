@@ -1,6 +1,7 @@
 class PlayState extends GameState {
 	directionClassifier;
-
+	width2 = 1500;
+	height2 = 700;
 	constructor(gameSystem) {
 		super(gameSystem);
 		this.start();
@@ -18,6 +19,7 @@ class PlayState extends GameState {
 		this.referenceImage = {
 			Up: imageAssets.Up,
 			Down: imageAssets.Down,
+			Open: imageAssets.Open,
 			Left: imageAssets.Left,
 			Right: imageAssets.Right,
 		};
@@ -31,6 +33,7 @@ class PlayState extends GameState {
 			target: colorAssets.target,
 		};
 
+		resizeCanvas(1500, 700);
 		this.directionClassifier = this.gameSystem.getClassifierByName("Direction");
 		this.repeatClassification();
 	}
@@ -95,20 +98,21 @@ class PlayState extends GameState {
 		if (!this.gameSystem.ClassifiedFlippedVideo) {
 			return;
 		}
-		image(this.gameSystem.ClassifiedFlippedVideo, width - this.gameSystem.video.width, height - this.gameSystem.video.height);
+		image(this.gameSystem.ClassifiedFlippedVideo, this.width2 / 2 + 200, 150, 500, 400);
 
 		if (!this.prediction) {
 			return;
 		}
-		text(this.prediction, width / 2, height - 200);
+		fill(50);
+		text(this.prediction, (this.width2 * 4) / 5, this.height2 - 100);
 	}
 
 	displayPicture() {
-		image(this.referenceImage.Up, width - 200, 0, 200, 185);
-		image(this.referenceImage.Down, width - 250, 250, 250, 175);
-		// image(this.imgOpen, 570, 460, 250, 175);
-		image(this.referenceImage.Left, 10, height - 175, 250, 175);
-		image(this.referenceImage.Right, 290, height - 175, 250, 175);
+		image(this.referenceImage.Up, 580, 10, 175, 175);
+		image(this.referenceImage.Down, 580, 235, 175, 175);
+		image(this.referenceImage.Open, 580, 460, 175, 175);
+		image(this.referenceImage.Left, 310, 460, 175, 175);
+		image(this.referenceImage.Right, 40, 460, 175, 175);
 	}
 
 	checkHasWon() {

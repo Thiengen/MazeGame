@@ -1,7 +1,6 @@
 class InitialState extends GameState {
 	GameName = "Welcome to Orange Maze !";
 	instructionText = "Ready ? \n Open your hand to start the game ";
-
 	constructor(gameSystem) {
 		super(gameSystem);
 		this.start();
@@ -9,6 +8,7 @@ class InitialState extends GameState {
 
 	start() {
 		this.instructionText = "Be patient ! Dear user 😙😙😙";
+		this.goDown = true;
 	}
 
 	execute() {
@@ -23,9 +23,10 @@ class InitialState extends GameState {
 		textSize(60);
 		textAlign(CENTER);
 		textFont("Georgia");
-		fill(200);
+		fill(50);
 
-		text(this.GameName, width / 2, height / 2 - 200);
+		text(this.GameName, width / 2, oscillator.oscillateInCanvas(height, 1.75, height / 8, -height / 4));
+		textSize(40);
 		text(this.instructionText, width / 2, height / 2 + 20);
 
 		textSize(20);

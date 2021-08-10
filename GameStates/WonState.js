@@ -7,6 +7,7 @@ class WonState extends GameState {
 	start() {
 		const guiColorAssets = this.gameSystem.assets.getChildAssetByType("Color").data;
 
+		this.goRight = true;
 		const nextLevelButton = createButton("Next Level");
 
 		nextLevelButton.style("font-size", "25px");
@@ -26,7 +27,6 @@ class WonState extends GameState {
 			this.modifyDifficulty();
 			gameSystem.gameState = new PlayState(this.gameSystem);
 			nextLevelButton.remove();
-			loop();
 		});
 	}
 
@@ -38,7 +38,8 @@ class WonState extends GameState {
 	}
 
 	execute() {
-		text("CONGRATS, You have cleared this level !!!", width / 2, height / 2);
-		noLoop();
+		textSize(50);
+		fill(50);
+		text("CONGRATS \n You have cleared this level !!!\n Open you hand palm to go next level", oscillator.oscillateInCanvas(width, 1, 300, 0), 200);
 	}
 }

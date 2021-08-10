@@ -2,20 +2,19 @@ let up = "Move Up", down = "Move Down", Right ="Move Right", Left = "Move Left",
 
 function tutorial(){
 
-    fill(200)
+    fill(50)
     textSize(30)
-    stroke(3)
 
 
-    text(up , 650 , 200);
+    text(up , 640 , 210);
 
-    text(down , 650, 425);
+    text(down , 660, 435);
 
-    text(Right , 130, 650);
+    text(Right , 130, 660);
 
-    text(Left , 390, 650);  
+    text(Left , 390, 660);  
     
-    text(nextLevel , 650, 650);  
+    text(nextLevel , 670, 660);  
 
 
 }
