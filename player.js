@@ -2,9 +2,9 @@ class Player {
 	speed = 5;
 
 	Spawn(maze, spawning_point = null) {
-		this.target_cell = undefined;
 		this.maze = maze;
 		this.cell_in = spawning_point ? maze.GetCellByCoordinate(spawning_point.x, spawning_point.y) : maze.GetCellByCoordinate(0, 0);
+		this.target_cell = this.cell_in;
 
 		if (!this.cell_in) {
 			console.error("Player is not spawn in a maze !\nThe game cannot start!");
@@ -15,7 +15,7 @@ class Player {
 	}
 
 	Render(fill_color, side_color = null) {
-		if (this.target_cell !== this.cell_in && this.target_cell) {
+		if (this.target_cell.vector.dist(this.cell_in.vector) > 0) {
 			this.position.lerp(this.target_cell.absolute_v, this.speed * deltaTime * 0.001);
 			if (this.target_cell.absolute_v.dist(this.position) <= 0.01) {
 				this.cell_in = this.target_cell;
@@ -34,8 +34,9 @@ class Player {
 	}
 
 	Move(direction) {
-		const translation = this.MoveToCell(direction, this.cell_in.vector);
-		this.target_cell = this.maze.GetCellByCoordinate(translation.x, translation.y);
+		const targetCellPosition = p5.Vector.add(createVector(direction.x, direction.y), this.cell_in.vector);
+		console.log(targetCellPosition);
+		this.target_cell = this.maze.GetCellByCoordinate(targetCellPosition.x, targetCellPosition.y);
 	}
 
 	MoveToCell(direction, coordinate) {
@@ -65,15 +66,15 @@ function PlayerMovementWithLabel() {
 		return;
 	}
 	if (result === "Up" && !player.cell_in.walls[0].is_active) {
-		player.Move(directions.TOP);
+		player.Move(directions.Up);
 		return;
 	} else if (result === "Right" && !player.cell_in.walls[1].is_active) {
-		player.Move(directions.RIGHT);
+		player.Move(directions.Right);
 		return;
 	} else if (result === "Down" && !player.cell_in.walls[2].is_active) {
-		player.Move(directions.BOTTOM);
+		player.Move(directions.Down);
 		return;
 	} else if (result === "Left" && !player.cell_in.walls[3].is_active) {
-		player.Move(directions.LEFT);
+		player.Move(directions.Left);
 	}
 }

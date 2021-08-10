@@ -17,10 +17,7 @@ class Cell {
 	}
 
 	GenerateWalls() {
-		const cell_midPoint = p5.Vector.add(
-			this.absolute_v,
-			p5.Vector.mult(createVector(1, 1), this.maze.cell_length / 2)
-		);
+		const cell_midPoint = p5.Vector.add(this.absolute_v, p5.Vector.mult(createVector(1, 1), this.maze.cell_length / 2));
 		const cell_cornerVector = createVector(-this.maze.cell_length / 2, -this.maze.cell_length / 2);
 		for (let i = 0; i < 4; i++) {
 			const vertex_one = p5.Vector.add(cell_midPoint, cell_cornerVector);
@@ -67,10 +64,7 @@ class Cell {
 		const initial_vector = createVector(0, -1);
 
 		for (let i = 0; i < this.walls.length; i++) {
-			const neighbour = this.maze.GetCellByCoordinate(
-				initial_vector.x + this.vector.x,
-				initial_vector.y + this.vector.y
-			);
+			const neighbour = this.maze.GetCellByCoordinate(initial_vector.x + this.vector.x, initial_vector.y + this.vector.y);
 
 			if (neighbour && !visited_cells.includes(neighbour)) {
 				neighbours.push(neighbour);
@@ -89,8 +83,8 @@ class Cell {
 }
 
 const directions = {
-	TOP: "top",
-	RIGHT: "right",
-	BOTTOM: "bottom",
-	LEFT: "left",
+	Up: { x: 0, y: -1 },
+	Right: { x: 1, y: 0 },
+	Down: { x: 0, y: 1 },
+	Left: { x: -1, y: 0 },
 };
