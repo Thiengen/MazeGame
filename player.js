@@ -34,9 +34,15 @@ class Player {
 	}
 
 	Move(direction) {
-		const targetCellPosition = p5.Vector.add(createVector(direction.x, direction.y), this.cell_in.vector);
-		console.log(targetCellPosition);
+		if (this.blockByWall(direction)) return;
+		const movingDir = directions[direction];
+		const targetCellPosition = p5.Vector.add(createVector(movingDir.x, movingDir.y), this.cell_in.vector);
 		this.target_cell = this.maze.GetCellByCoordinate(targetCellPosition.x, targetCellPosition.y);
+	}
+
+	blockByWall(direction) {
+		const wallIndex = Object.keys(directions).indexOf(direction);
+		return this.cell_in.walls[wallIndex].is_active;
 	}
 }
 
@@ -46,19 +52,7 @@ function PlayerMovementWithLabel() {
 	}
 	const player = game.player;
 	const result = game.gameState.prediction;
-	if (player.target_cell && player.target_cell !== player.cell_in) {
-		return;
-	}
-	if (result === "Up" && !player.cell_in.walls[0].is_active) {
-		player.Move(directions.Up);
-		return;
-	} else if (result === "Right" && !player.cell_in.walls[1].is_active) {
-		player.Move(directions.Right);
-		return;
-	} else if (result === "Down" && !player.cell_in.walls[2].is_active) {
-		player.Move(directions.Down);
-		return;
-	} else if (result === "Left" && !player.cell_in.walls[3].is_active) {
-		player.Move(directions.Left);
-	}
+	if (player.target_cell !== player.cell_in) return;
+	if (!result || result === "Idle") return;
+	player.Move(result);
 }
