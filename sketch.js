@@ -90,5 +90,5 @@ function setup() {
 function draw() {
 	background(config.assets.getChildAssetByType("Color").data.background);
 	game.update();
-	PlayerMovementWithLabel();
+	//PlayerMovementWithLabel();
 }

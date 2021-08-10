@@ -83,6 +83,7 @@ class PlayState extends GameState {
 			.classify(this.gameSystem, image)
 			.then((response) => {
 				this.prediction = `${response.results[0].label}`;
+				this.gameSystem.player.Move(this.prediction);
 				this.repeatClassification();
 			})
 			.catch((err) => console.log(err));

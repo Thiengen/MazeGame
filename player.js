@@ -34,7 +34,7 @@ class Player {
 	}
 
 	Move(direction) {
-		if (this.blockByWall(direction)) return;
+		if (this.blockByWall(direction) || this.target_cell !== this.cell_in) return;
 		const movingDir = directions[direction];
 		const targetCellPosition = p5.Vector.add(createVector(movingDir.x, movingDir.y), this.cell_in.vector);
 		this.target_cell = this.maze.GetCellByCoordinate(targetCellPosition.x, targetCellPosition.y);
