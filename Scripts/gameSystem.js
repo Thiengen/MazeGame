@@ -20,8 +20,7 @@ class gameSystem {
 				return classifiers[key];
 			}
 		}
-		console.log("Classifier not found !!!");
-		return null;
+		return undefined;
 	}
 
 	getFlippedVideo() {

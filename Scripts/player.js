@@ -15,6 +15,10 @@ class Player {
 		this.position = this.cell_in.absolute_v.copy();
 	}
 
+	summonWallDestroyer() {
+		console.log("Summoning wall destroyer");
+	}
+
 	Render(fill_color, side_color = null) {
 		if (this.target_cell.vector.dist(this.cell_in.vector) > 0) {
 			this.position.lerp(this.target_cell.absolute_v, this.speed * deltaTime * 0.001);
