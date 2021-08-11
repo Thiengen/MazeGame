@@ -31,14 +31,9 @@ class InitialState extends GameState {
 
 		textSize(20);
 		text(this.gameStatus, width / 2, height - 100);
-	}
-}
 
-function keyPressed() {
-	if (!(game.gameState instanceof InitialState)) {
-		return;
-	}
-	if (keyCode === ENTER && game.ready) {
-		game.changeState(PlayState);
+		if (keyIsPressed && keyIsDown(ENTER) && this.gameSystem.ready) {
+			game.changeState(PlayState);
+		}
 	}
 }
