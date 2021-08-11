@@ -1,7 +1,8 @@
 class Player {
 	speed = 5;
 
-	Spawn(maze, spawning_point = null) {
+	Spawn(maze, gameState, spawning_point = null) {
+		this.gameState = gameState;
 		this.maze = maze;
 		this.cell_in = spawning_point ? maze.GetCellByCoordinate(spawning_point.x, spawning_point.y) : maze.GetCellByCoordinate(0, 0);
 		this.target_cell = this.cell_in;
@@ -19,7 +20,7 @@ class Player {
 			this.position.lerp(this.target_cell.absolute_v, this.speed * deltaTime * 0.001);
 			if (this.target_cell.absolute_v.dist(this.position) <= 0.01) {
 				this.cell_in = this.target_cell;
-				game.gameState.repeatClassification();
+				this.gameState.repeatClassification();
 			}
 		}
 
@@ -36,7 +37,7 @@ class Player {
 
 	Move(direction) {
 		if (this.blockByWall(direction) || this.target_cell !== this.cell_in) {
-			game.gameState.repeatClassification();
+			this.gameState.repeatClassification();
 			return;
 		}
 		const movingDir = directions[direction];
