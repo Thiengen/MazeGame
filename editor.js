@@ -46,13 +46,31 @@ function runEditor() {
 	});
 
 	useSavedColorButton.mousePressed(() => {
-		const colorAsset = config.assets.getChildAssetByType("Color").data;
-		loadJSON("./Colors/m_Colors.json", (data) => {
-			for (const stringColor in data) {
-				const colorData = data[stringColor];
-				colorAsset[stringColor].levels = colorData.levels;
+		const fileInput = createFileInput((file) => {
+			if (file.type !== "application") {
+				console.log("File type is invalid !!!");
+				return;
 			}
+			const colorAsset = config.assets.getChildAssetByType("Color").data;
+			loadJSON(file.data, (data) => {
+				for (const key in data) {
+					colorAsset[key].levels = data[key].levels;
+				}
+			});
 		});
+
+		fileInput.position(useSavedColorButton.position().x, useSavedColorButton.position().y);
+		useSavedColorButton.hide();
+		createCloseButton(
+			{
+				x: fileInput.position().x,
+				y: fileInput.position().y + fileInput.size().height,
+			},
+			() => {
+				fileInput.remove();
+				useSavedColorButton.show();
+			}
+		);
 	});
 }
 
