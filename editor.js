@@ -19,17 +19,16 @@ function runEditor() {
 		buttonPos = setColorsButton.position();
 		setColorsButton.hide();
 		saveColorsButton.show();
-		const colorData = config.assets.getChildAssetByType("Color").data;
-		const colorEditor = showColors(colorData, buttonPos, undefined, undefined, { x: 0, y: 20 });
+		const colorsData = config.assets.getChildAssetByType("Color").data;
+		const colorEditors = showColors(colorsData, buttonPos, undefined, undefined, { x: 0, y: 20 });
 		createCloseButton(
 			{
 				x: buttonPos.x,
 				y: buttonPos.y,
 			},
 			() => {
-				for (const key in colorEditor) {
-					colorEditor[key].forEach((element) => element.remove());
-				}
+				colorEditors.colorPickers.forEach((element) => element.colorPicker.remove());
+				colorEditors.colorLabels.forEach((element) => element.remove());
 				setColorsButton.show();
 				saveColorsButton.hide();
 			}
@@ -37,12 +36,11 @@ function runEditor() {
 
 		saveColorsButton.mousePressed(() => {
 			const data = {};
-			const colorsData = config.assets.getChildAssetByType("Color").data;
 
-			for (const key in colorsData) {
-				const colorValues = colorsData[key].levels;
-				data[key] = color(colorValues[0], colorValues[1], colorValues[2]);
-			}
+			colorEditors.colorPickers.forEach((element) => {
+				data[element.key] = element.colorPicker.color();
+			});
+
 			createStringDict(data).saveJSON("m_Colors");
 		});
 	});
@@ -71,7 +69,7 @@ function showColors(colorData, labelPosition, widthSpacing = 100, lineSpacing = 
 		colorLabel.position(initialOffset?.x + labelPosition.x, initialOffset?.y + labelPosition.y + (lineSpacing + colorPicker.size().height) * row);
 		colorPicker.position(colorLabel.position().x + widthSpacing, colorLabel.position().y);
 		colorLabels.push(colorLabel);
-		colorPickers.push(colorPicker);
+		colorPickers.push({ key, colorPicker });
 		row++;
 	}
 	return { colorPickers, colorLabels };
