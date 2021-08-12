@@ -1,0 +1,3 @@
+class idle {
+	static respond() {}
+}
