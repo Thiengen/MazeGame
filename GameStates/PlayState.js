@@ -99,9 +99,3 @@ class PlayState extends GameState {
 		}
 	}
 }
-
-function keyPressed() {
-	if (keyCode === ENTER && game.gameState instanceof PlayState) {
-		game.player.summonWallDestroyer();
-	}
-}
