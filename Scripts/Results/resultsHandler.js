@@ -8,7 +8,7 @@ class resultsHandler {
 		}
 		const currentGameState = info.gameSystem.gameState;
 		if (!(currentGameState instanceof PlayState)) {
-			console.log(`Respond aborted as current game state is ${currentGameState}!!!`);
+			console.log(`Respond aborted as current game state is not in play state!!!`);
 			return;
 		}
 		resultsObject.respond(info);

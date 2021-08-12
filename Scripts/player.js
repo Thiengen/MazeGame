@@ -14,8 +14,9 @@ class Player {
 		this.position = this.cell_in.absolute_v.copy();
 	}
 
-	summonWallDestroyer() {
+	summonWallDestroyer(onDestroyedWalls) {
 		console.log("Summoning wall destroyer");
+		onDestroyedWalls();
 	}
 
 	Render(fill_color, side_color = null) {

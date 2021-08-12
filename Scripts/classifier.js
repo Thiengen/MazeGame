@@ -20,7 +20,6 @@ class classifier {
 			console.log("Classifier only classfy images during play state !");
 			return;
 		}
-		console.log("Classifying...");
 		const results = await this.Value.classify(info.image).catch((err) => console.log(err));
 		resultsHandler.handle({
 			gameSystem: info.gameSystem,

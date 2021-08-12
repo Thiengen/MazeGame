@@ -56,7 +56,10 @@ class PlayState extends GameState {
 
 	continue() {
 		this.listenToVisibilityChangedChannel();
-		this.repeatClassification();
+		this.gameSystem.getClassifierByName("Direction").classify({
+			gameSystem: this.gameSystem,
+			image: this.gameSystem.getFlippedVideo(),
+		});
 	}
 
 	pause(source) {
