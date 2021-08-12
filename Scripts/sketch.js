@@ -54,7 +54,6 @@ function preload() {
 		return video;
 	});
 
-	//Background , Maze , Lines && reach point , Player , Reachpoint lines
 	config.loadAssets("Difficulty", {
 		difficultyOffset: 2,
 		difficultySpeed: 1,
