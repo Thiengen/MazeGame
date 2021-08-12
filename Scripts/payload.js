@@ -1,7 +1,6 @@
 const payloadModel = {
-	init: function (URL_link, onGotResults) {
+	init: function (URL_link) {
 		this.URL_link = URL_link;
-		this.onGotResult = onGotResults;
 		return this;
 	},
 };

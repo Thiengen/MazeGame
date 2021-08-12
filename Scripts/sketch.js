@@ -29,37 +29,14 @@ function preload() {
 	config.loadAssets(
 		"Model",
 		{
-			Direction: Object.create(payloadModel).init("https://teachablemachine.withgoogle.com/models/nNtbYUnn-/", (info) => {
-				const classifier = info.gameSystem.getClassifierByName(info.results[0].label);
-				if (classifier) {
-					classifier.classify(info);
-					return;
-				}
-				info.gameSystem.gameState.prediction = info.results[0].label;
-				info.gameSystem.gameState.repeatClassification();
-			}), //"https://teachablemachine.withgoogle.com/models/7WRHgCGqz/",
-			Vertical: Object.create(payloadModel).init("https://teachablemachine.withgoogle.com/models/gvwdkEKSF/", (info) => {
-				if (!(info.gameSystem.gameState instanceof PlayState)) return;
-				info.gameSystem.player.Move(info.results[0].label);
-				info.gameSystem.gameState.prediction = info.results[0].label;
-			}),
-			Horizontal: Object.create(payloadModel).init("https://teachablemachine.withgoogle.com/models/9r5lWuqRi/", (info) => {
-				if (!(info.gameSystem.gameState instanceof PlayState)) return;
-				info.gameSystem.player.Move(info.results[0].label);
-				info.gameSystem.gameState.prediction = info.results[0].label;
-			}),
+			Direction: "https://teachablemachine.withgoogle.com/models/nNtbYUnn-/", //"https://teachablemachine.withgoogle.com/models/7WRHgCGqz/",
+			Vertical: "https://teachablemachine.withgoogle.com/models/gvwdkEKSF/",
+			Horizontal: "https://teachablemachine.withgoogle.com/models/9r5lWuqRi/",
 		},
 		(source) => {
 			let models = {};
 			for (const key in source) {
-				const model = new classifier(
-					key,
-					source[key].URL_link,
-					() => {
-						config.onAssetReady();
-					},
-					source[key].onGotResult
-				);
+				const model = new classifier(key, source[key], () => config.onAssetReady());
 				models[key] = model;
 			}
 			return models;

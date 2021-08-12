@@ -34,12 +34,7 @@ class PlayState extends GameState {
 		};
 
 		resizeCanvas(1500, 700);
-		this.mainClassifier = this.gameSystem.getClassifierByName("Direction");
-		this.repeatClassification();
-	}
-
-	repeatClassification() {
-		this.mainClassifier.classify({
+		this.gameSystem.getClassifierByName("Direction").classify({
 			gameSystem: this.gameSystem,
 			image: this.gameSystem.getFlippedVideo(),
 		});

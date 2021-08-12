@@ -1,5 +1,5 @@
 class classifier {
-	constructor(name, model_URL, onModelReady, onGotResults) {
+	constructor(name, model_URL, onModelReady) {
 		this.Name = name;
 		this.Value = ml5.imageClassifier(model_URL + "model.json");
 		this.Value.ready
@@ -9,7 +9,6 @@ class classifier {
 				onModelReady();
 			})
 			.catch((err) => console.log(err));
-		this.onGotResults = onGotResults;
 	}
 
 	async classify(info) {
@@ -22,7 +21,7 @@ class classifier {
 			return;
 		}
 		const results = await this.Value.classify(info.image).catch((err) => console.log(err));
-		this.onGotResults({
+		resultsHandler.handle({
 			gameSystem: info.gameSystem,
 			image: info.image,
 			results,
