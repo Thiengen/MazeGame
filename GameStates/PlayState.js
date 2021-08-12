@@ -10,7 +10,7 @@ class PlayState extends GameState {
 	start() {
 		this.listenToVisibilityChangedChannel();
 		this.gameSystem.maze.Generate();
-		this.gameSystem.player.Spawn(this.gameSystem.maze, this, { x: 0, y: 0 });
+		this.gameSystem.player.Spawn(this.gameSystem.maze, { x: 0, y: 0 });
 		// Destination set next to player this.destination = this.gameSystem.maze.GetCellByCoordinate(this.gameSystem.maze.rows_number / 2 + 1, this.gameSystem.maze.columns_number / 2);
 		this.destination = this.gameSystem.maze.all_cells[this.gameSystem.maze.all_cells.length - 1];
 
@@ -34,15 +34,10 @@ class PlayState extends GameState {
 		};
 
 		resizeCanvas(1500, 700);
-		this.directionClassifier = this.gameSystem.getClassifierByName("Direction");
-		this.repeatClassification();
-	}
-
-	async repeatClassification() {
-		this.directionClassifier
-			.classify(this.gameSystem, this.gameSystem.getFlippedVideo())
-			.then((response) => this.gotDirectionResults(response.results, response.image))
-			.catch((err) => console.log(err));
+		this.gameSystem.getClassifierByName("Direction").classify({
+			gameSystem: this.gameSystem,
+			image: this.gameSystem.getFlippedVideo(),
+		});
 	}
 
 	listenToVisibilityChangedChannel() {
@@ -70,24 +65,6 @@ class PlayState extends GameState {
 		source.gameSystem.gameState.previousState = this;
 	}
 
-	gotDirectionResults(results, image) {
-		if (results[0].label === "Idle" && this.directionClassifier) {
-			this.prediction = results[0].label;
-			this.repeatClassification();
-			return;
-		}
-
-		const classifier = this.gameSystem.getClassifierByName(results[0].label);
-
-		classifier
-			.classify(this.gameSystem, image)
-			.then((response) => {
-				this.prediction = `${response.results[0].label}`;
-				this.gameSystem.player.Move(this.prediction);
-			})
-			.catch((err) => console.log(err));
-	}
-
 	execute() {
 		this.displayPicture();
 		tutorial();
@@ -97,9 +74,7 @@ class PlayState extends GameState {
 		this.checkHasWon();
 		image(this.gameSystem.getFlippedVideo(), this.width2 / 2 + 200, 150, 500, 400);
 
-		if (!this.prediction) {
-			return;
-		}
+		if (!this.prediction) return;
 		fill(50);
 		text(this.prediction, (this.width2 * 4) / 5, this.height2 - 100);
 	}
@@ -119,5 +94,11 @@ class PlayState extends GameState {
 			this.gameSystem.maze.clearCache();
 			this.gameSystem.changeState(WonState);
 		}
+	}
+}
+
+function keyPressed() {
+	if (keyCode === ENTER && game.gameState instanceof PlayState) {
+		game.player.summonWallDestroyer();
 	}
 }

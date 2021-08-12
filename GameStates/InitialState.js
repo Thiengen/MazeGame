@@ -8,7 +8,6 @@ class InitialState extends GameState {
 
 	start() {
 		this.instructionText = "Be patient ! Dear user 😙😙😙";
-		this.goDown = true;
 	}
 
 	execute() {

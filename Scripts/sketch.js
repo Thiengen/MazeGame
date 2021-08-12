@@ -29,16 +29,14 @@ function preload() {
 	config.loadAssets(
 		"Model",
 		{
-			Direction: "https://teachablemachine.withgoogle.com/models/7WRHgCGqz/",
+			Direction: "https://teachablemachine.withgoogle.com/models/nNtbYUnn-/", //"https://teachablemachine.withgoogle.com/models/7WRHgCGqz/",
 			Vertical: "https://teachablemachine.withgoogle.com/models/gvwdkEKSF/",
 			Horizontal: "https://teachablemachine.withgoogle.com/models/9r5lWuqRi/",
 		},
 		(source) => {
 			let models = {};
 			for (const key in source) {
-				const model = new classifier(key, source[key], () => {
-					config.onAssetReady();
-				});
+				const model = new classifier(key, source[key], () => config.onAssetReady());
 				models[key] = model;
 			}
 			return models;

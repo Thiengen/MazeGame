@@ -1,8 +1,7 @@
 class Player {
 	speed = 5;
 
-	Spawn(maze, gameState, spawning_point = null) {
-		this.gameState = gameState;
+	Spawn(maze, spawning_point = null) {
 		this.maze = maze;
 		this.cell_in = spawning_point ? maze.GetCellByCoordinate(spawning_point.x, spawning_point.y) : maze.GetCellByCoordinate(0, 0);
 		this.target_cell = this.cell_in;
@@ -15,12 +14,16 @@ class Player {
 		this.position = this.cell_in.absolute_v.copy();
 	}
 
+	summonWallDestroyer() {
+		console.log("Summoning wall destroyer");
+	}
+
 	Render(fill_color, side_color = null) {
 		if (this.target_cell.vector.dist(this.cell_in.vector) > 0) {
 			this.position.lerp(this.target_cell.absolute_v, this.speed * deltaTime * 0.001);
 			if (this.target_cell.absolute_v.dist(this.position) <= 0.01) {
 				this.cell_in = this.target_cell;
-				this.gameState.repeatClassification();
+				this.onReachDestination();
 			}
 		}
 
@@ -35,14 +38,15 @@ class Player {
 		}
 	}
 
-	Move(direction) {
+	Move(direction, onReachDestination) {
 		if (this.blockByWall(direction) || this.target_cell !== this.cell_in) {
-			this.gameState.repeatClassification();
+			onReachDestination();
 			return;
 		}
 		const movingDir = directions[direction];
 		const targetCellPosition = p5.Vector.add(createVector(movingDir.x, movingDir.y), this.cell_in.vector);
 		this.target_cell = this.maze.GetCellByCoordinate(targetCellPosition.x, targetCellPosition.y);
+		this.onReachDestination = onReachDestination;
 	}
 
 	blockByWall(direction) {

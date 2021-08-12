@@ -72,7 +72,7 @@ class Maze {
 		//Add every single cell in the maze to an array so we can get the cell from that array
 		for (let j = 0; j < this.rows_number; j++) {
 			for (let i = 0; i < this.columns_number; i++) {
-				let cell = new Cell(i, j, this)
+				let cell = new Cell(i, j, this);
 				this.all_cells.push(cell);
 			}
 		}
