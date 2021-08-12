@@ -10,7 +10,7 @@ class PlayState extends GameState {
 	start() {
 		this.listenToVisibilityChangedChannel();
 		this.gameSystem.maze.Generate();
-		this.gameSystem.player.Spawn(this.gameSystem.maze, this);
+		this.gameSystem.player.Spawn(this.gameSystem.maze, { x: 0, y: 0 });
 		// Destination set next to player this.destination = this.gameSystem.maze.GetCellByCoordinate(this.gameSystem.maze.rows_number / 2 + 1, this.gameSystem.maze.columns_number / 2);
 		this.destination = this.gameSystem.maze.all_cells[this.gameSystem.maze.all_cells.length - 1];
 

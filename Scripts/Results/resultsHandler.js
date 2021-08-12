@@ -1,6 +1,6 @@
 class resultsHandler {
 	static handle(info) {
-		const results = info.results[0].label.toLowerCase();
+		const results = info.results[0].label.toUpperCase();
 		const resultsObject = eval(`${results}`);
 		if (!resultsObject) {
 			console.log("Result is invalid !!!");
