@@ -3,6 +3,8 @@ let config;
 let debug = false;
 
 function preload() {
+	music = loadSound('/Sound/relax.mp3')
+
 	document.addEventListener("OnAllAssetsReady", () => {
 		game.gameState.gameStatus = "Ready to start game !!!";
 		game.gameState.instructionText = "Ready? Open your hand palm \n to start the game !!!";
@@ -41,6 +43,7 @@ function preload() {
 			}
 			return models;
 		}
+		
 	);
 
 	//Setup webcam video
@@ -76,15 +79,18 @@ function preload() {
 			return source;
 		}
 	);
+
 }
 
 function setup() {
 	createCanvas(900, 700);
 	const maze = new Maze(50, 580, 460);
 	game = new gameSystem(maze, new Player());
+	songPlay()
 }
 
 function draw() {
 	background(config.assets.getChildAssetByType("Color").data.background);
 	game.update();
+	songPlay()
 }
